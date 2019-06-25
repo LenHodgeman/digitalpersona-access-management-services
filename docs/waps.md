@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Web Authentication Policy Service Service
+title: Web Authentication Policy Service
 nav_order: 4
 ---
 
