@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Web Enrollment Service
+title: Web Secret Management Service
 nav_order: 3
 ---
 
