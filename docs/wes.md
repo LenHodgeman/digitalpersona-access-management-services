@@ -19,7 +19,8 @@ A sample program is available [here](https://lenhodgeman.github.io/digitalperson
 
 The IDPWebEnroll interface is a Windows Foundation Class (WCF) interface, and is described below.  
 
-~~~namespace WebServices.DPWebEnroll
+~~~
+namespace WebServices.DPWebEnroll
 {
 	[ServiceContract]
 	public interface IDPWebEnroll
