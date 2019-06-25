@@ -10,7 +10,7 @@ The DigitalPersona Access management Services are a collection of RESTful servic
 
 These services are:
 
-- DigitalPersona Web Enrollment Services (WES)
+- Web Enrollment Services (WES)
 - Web Secret Management Service (WSMS)  
 - Web Authentication Service (WAS)
 - Web Authentication Policy Service (WAPS)
