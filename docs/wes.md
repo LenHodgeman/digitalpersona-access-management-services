@@ -15,7 +15,7 @@ Web Enrollment features are accessed through the WES, implemented as a GUI-less 
 
 A sample program is available [here](https://lenhodgeman.github.io/digitalpersona-web-sample/index.html), which provides a simple GUI-based application  illustrating the main features of the service provided through this API.  
 
-### IDPWebEnroll interface  
+## IDPWebEnroll interface  
 
 The IDPWebEnroll interface is a Windows Foundation Class (WCF) interface, and is described below.  
 
@@ -148,13 +148,13 @@ namespace WebServices.DPWebEnroll
 }
 ~~~  
 
-### Methods
+## Methods
 The methods available through the Web Enrollment Servicec API are as follows.  
 
-#### GetUserCredentials method  
+### GetUserCredentials method  
 The GetUserCredentials method allows the caller to request information about the credentials that have been enrolled by a specified user. GetUserCredentials should be implemented as HTTP GET using JSON as the response format.
 
-##### Syntax
+#### Syntax
 
 ~~~
 List<String> GetUserCredentials(String userName, UInt16 userNameType);
@@ -205,10 +205,10 @@ List<String> GetUserCredentials(String userName, UInt16 userNameType);
   </tr>                
 </table>
 
-##### Return values
+#### Return values
 List of credential IDs of all credentials enrolled by a user. For full details on all supported credential IDs, see [this section](wes-cred-format.md).  
 
-##### Examples  
+#### Examples  
 
 ~~~
 https://www.somecompany.com/DPWebEnrollervice.svc/						GetUserCredentials?
@@ -230,14 +230,14 @@ The example response would be the following:
 
 This response means that the user john.doe@somecompany.com has password, fingerprint and PIN credentials enrolled.  
 
-#### GetEnrollmentData method  
+### GetEnrollmentData method  
 
 The GetEnrollmentData method is a utility method which allows the caller to get credential enrollment specific data.  
 
 For example, Live Question authentication may require knowing which particular questions were enrolled, for fingerprint - fingerprint positions enrolled, etc.
 GetEnrollmentData should be implemented as HTTP GET using JSON as response format.  
 
-##### Syntax  
+#### Syntax  
 
 ~~~  
 String GetEnrollmentData(String userName, UInt16 userNameType, String credentialId);
@@ -292,10 +292,10 @@ String GetEnrollmentData(String userName, UInt16 userNameType, String credential
   </tr>                   
 </table>
 
-##### Return values
+#### Return values
 Base64Url encoded enrollment data. The format of such enrollment data is credential-specific and will be detailed in separate document(s).  
 
-##### Example  
+#### Example  
 
 ~~~
 https://www.somecompany.com/DPWebEnrollService.svc/GetEnrollmentData?
@@ -304,7 +304,7 @@ user=john.doe@somecompany.com&type=6&cred_id=AC184A13-60AB-40e5-A514-E10F777EC2F
 
 Here the user name is john.doe@somecompany.com, the user name type is 6 which means UPN name and the credential ID is {AC184A13-60AB-40e5-A514-E10F777EC2F9}, which means information about a fingerprint credential was requested.  
 
-##### Note  
+#### Note  
 
 The use of braces {} is considered unsafe in URLs (see RFC 1738), which is why "braceless" GUID representation is used in the API.
 The example response would be the following:  
@@ -315,17 +315,18 @@ The example response would be the following:
 
 This response shows fingerprint enrollment data for the user john.doe@somecompany.com.
 
-#### CreateUser method
+### CreateUser method
 
 The CreateUser method creates a user account in the DigitalPersona database. This method makes sense only if DigitalPersona is used as the  backend server. In DigitalPersona AD user account is created in Active Directory and Administrator must use standard Active Directory tools to create it.  
 
 CreateUser should be implemented as HTTP PUT using JSON as the response format.
 
-##### Syntax
+#### Syntax
 
 ~~~
 void CreateUser(Ticket secOfficer, User user, String password);
 ~~~
+
 <table style="width:95%;margin-left:auto;margin-right:auto;">
   <tr>
     <th style="width:20%" ALIGN="left">Parameter</th>
@@ -345,7 +346,7 @@ void CreateUser(Ticket secOfficer, User user, String password);
   </tr>    
 </table>
 
-##### Example
+#### Example
 
 ~~~
 https://www.somecompany.com/DPWebEnrollService.svc/CreateUser
@@ -366,23 +367,46 @@ Below is an example of an HTTP BODY of CreateUser request.
 ~~~
 
 The call above creates an account in DigitalPersona (AD LDS) database for Active Directory user with UPN name john.doe@somecompany.com.
-DeleteUser method
-The DeleteUser method deletes a user account from the DigitalPersona database. This method makes sense only if DigitalPersona is used as the backend server. In DigitalPersona AD, the user account is deleted in Active Directory and an Administrator should use the standard Active Directory tools to do so.
-DeleteUser should be implemented as HTTP DELETE using JSON as the response format.
-Syntax
+
+### DeleteUser method  
+
+The DeleteUser method deletes a user account from the DigitalPersona database.  
+
+This method makes sense only if DigitalPersona is used as the backend server. In DigitalPersona AD, the user account is deleted in Active Directory and an Administrator should use the standard Active Directory tools to do so.  
+
+DeleteUser should be implemented as HTTP DELETE using JSON as the response format.  
+
+#### Syntax  
+~~~
 void DeleteUser(Ticket secOfficer, User user);
+~~~  
 
-Parameter	Description
-secOfficer	JSON Web Token of Security Officer. Security Officer should use the DigitalPersona Web AUTH Service to authenticate himself and acquire this token. Token must be valid to call succeeded. To be valid, a token must be:
-Issued no longer than 10 minutes before the operation
-One of the Primary credentials must be used to acquire this token and
-The token owner must have a rights to create user account in DigitalPersona (AD LDS) database.
-user	User account that needs to be deleted. See the definition of the User class on page 68.
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Parameter</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">secOfficer</td>
+  <td valign="top">JSON Web Token of Security Officer. Security Officer should use the DigitalPersona Web AUTH Service to authenticate himself and acquire this token. Token must be valid for call to succeed. To be valid, the  token must be:<BR><BR>1. Issued no longer than 10 minutes before the operation,<BR>2. One of the Primary credentials must be used to acquire this token and<BR>3. The token owner must have the necessary rights to create the user account in the DigitalPersona AD/LDS  database.</td>
+  </tr>
+  <tr>
+  <td valign="top">user</td>
+  <td valign="top">The user account that needs to be deleted. See the definition of the User class <A HREF="https://lenhodgeman.github.io/digitalpersona-native-api/">here.</A> (Needs link to User Class on page 68)</td>
+  </tr>  
+</table>  
 
-Examples
+#### Examples  
+
 Below is example of a URL that can be used to activate a DeleteUser request:
+
+~~~
 https://www.somecompany.com/DPWebEnrollService.svc/DeleteUser
-Below is example of HTTP BODY of DeleteUser request:
+~~~
+
+Below is an example of the HTTP BODY for a  DeleteUser request:
+
+~~~
 {
 	"secOfficer":{"jwt":"Z3NhZGhhc2Rma0FTREZLYWZyZGtB"},
 	"user":
@@ -391,12 +415,20 @@ Below is example of HTTP BODY of DeleteUser request:
 		"type":6
 	}
 }
-The call above deletes an account from DigitalPersona (AD LDS) database for Active Directory user with UPN name john.doe@somecompany.com.
-EnrollUserCredentials method
+~~~
+
+The call above deletes an account from DigitalPersona (AD LDS) database for Active Directory user with UPN name john.doe@somecompany.com.  
+
+### EnrollUserCredentials method  
+
 The EnrollUserCredentials method enrolls (or re-enrolls) specific credentials for a named user and stores their credential data in the DigitalPersona AD database. This method will work for both DigitalPersona AD and DigitalPersona LDS backend servers.
-EnrollUserCredentials should be implemented as HTTP PUT using JSON as response format.
-Syntax
+EnrollUserCredentials should be implemented as HTTP PUT using JSON as response format.  
+
+#### Syntax
+
+~~~
 void EnrollUserCredentials(Ticket secOfficer, Ticket owner, Credential credential);
+~~~
 
 Parameter	Description
 secOfficer	JSON Web Token of Security Officer. Security Officer should use the DigitalPersona Web AUTH Service to authenticate himself and acquire this token. Token must be valid to call succeeded. To be valid, a token must be:
