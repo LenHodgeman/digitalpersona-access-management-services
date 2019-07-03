@@ -807,6 +807,7 @@ public enum AttributeAction
 	Delete = 4,
 }
 ~~~
+
 <table style="width:95%;margin-left:auto;margin-right:auto;">
   <tr>
     <th style="width:20%" ALIGN="left">Parameter</th>
@@ -815,6 +816,7 @@ public enum AttributeAction
   <tr>
   	<td valign="top">clear</td>
   	<td valign="top">Attribute must be cleared. The attributeData argument of the PutUserAttribute method will be ignored and can be "null".</td>
+	</tr>
 	<tr>
 		<td valign="top">Update</td>
 		<td valign="top">Attribute will be updated. All previous data in the attribute will be cleared.</td>
@@ -827,9 +829,9 @@ public enum AttributeAction
 		<td valign="top">Delete</td>
 		<td valign="top">The data provided in the attributeData argument of the PutUserAttribute method will be deleted from the attribute. Makes sense only for multivalued attributes.</td>
 	</tr>
-</table>
+</table>  
 
-### AttributeType enumeration  1 
+### AttributeType enumeration   
 The AttributeType enumeration specifies the value type of the attribute.
 
 ~~~
