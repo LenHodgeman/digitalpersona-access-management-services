@@ -430,19 +430,31 @@ EnrollUserCredentials should be implemented as HTTP PUT using JSON as response f
 void EnrollUserCredentials(Ticket secOfficer, Ticket owner, Credential credential);
 ~~~
 
-Parameter	Description
-secOfficer	JSON Web Token of Security Officer. Security Officer should use the DigitalPersona Web AUTH Service to authenticate himself and acquire this token. Token must be valid to call succeeded. To be valid, a token must be:
-Issued no longer than 10 minutes before the operation
-One of the Primary credentials must be used to acquire this token and
-The token owner must have a rights to create user account in the DigitalPersona LDS or DigitalPersona AD database.
-NOTE: This parameter is optional. If user has rights to enroll himself (self-enrollment allowed), caller may provide "null" to this parameter.
-owner	JSON Web Token of the owner of credentials. User should use DigitalPersona Web AUTH Service to authenticate itself and acquire this token. Token must be valid to call succeeded. To be valid, a token must be:
-Issued no longer than 10 minutes before the operation
-One of the Primary credentials (or same credentials) must be used to acquire this token.
-credential	Credential to be enrolled. Note that the Data field of this parameter is specific to each credential. See the definition of the Credential class on page 33 and following.
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Parameter</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">secOfficer</td>
+  <td valign="top">JSON Web Token of the Security Officer. The Security Officer should use the DigitalPersona Web AUTH Service to authenticate himself and acquire this token. The token must be valid for the call to succeed. To be valid, a token must be:
+	<BR><BR>
+	1. Issued no longer than 10 minutes before the operation,<BR>2. One of the Primary credentials must be used to acquire this token and<BR>3. The token owner must have the necessary rights to create the user account in the DigitalPersona AD/LDS  database.<BR><BR>
+	<b>NOTE</b>: This parameter is optional. If the user has the necessary rights to enroll himself (i.e. self-enrollment is allowed), the caller may provide "null" to this parameter.
+	</tr>
+	<tr>
+	<td>owner</td>
+	<td>JSON Web Token of the owner of credentials. User should use DigitalPersona Web AUTH Service to authenticate itself and acquire this token. Token must be valid to call succeeded. To be valid, a token must be:
+	<BR><BR>1. Issued no longer than 10 minutes before the operation, and<BR>
+	2. One of the Primary credentials (or the same credentials) must be used to acquire this token.</td>
+  </tr>
+	<tr><td>credential</td>
+	<td>Credential to be enrolled. Note that the Data field of this parameter is specific to each credential. See the definition of the Credential class on page 33 and following.</td>
+</table>  
 
-Examples
-Below is an example of a URL which can be used to PUT EnrollUserCredentials request:
+#### Examples
+Below is an example of a URL which can be used to PUT the EnrollUserCredentials request:
+~~~
 https://www.somecompany.com/DPWebEnrollService.svc/EnrollUserCredentials
 Below is example of HTTP BODY of EnrollUserCredentials request:
 {
@@ -454,26 +466,46 @@ Below is example of HTTP BODY of EnrollUserCredentials request:
 		"data":"Z3NhZGhhc2Rma0FTREZLYWZyZGtB"
 	}
 }
+~~~  
+
 The call above enrolls fingerprint credentials for the user specified in the "owner" token.
-DeleteUserCredentials method
-DeleteUserCredentials method deletes (un-enrolls) specific credentials for a user and remove credential data from DigitalPersona database. This method will work for both DigitalPersona AD and DigitalPersona LDS backend servers.
-DeleteUserCredentials should be implemented as HTTP DELETE using JSON as response format.
-Syntax
+
+### DeleteUserCredentials method
+
+The DeleteUserCredentials method deletes (un-enrolls) specific credentials for a user and removes the credential data from the DigitalPersona database. This method will work for both DigitalPersona AD and DigitalPersona LDS backend servers.  
+
+DeleteUserCredentials should be implemented as HTTP DELETE using JSON as the response format.
+
+##### Syntax
+~~~
 void DeleteUserCredentials(Ticket secOfficer, Ticket owner, Credential credential);
+~~~
 
-Parameter	Description
-secOfficer	JSON Web Token of Security Officer. Security Officer should use the DigitalPersona Web AUTH Service to authenticate himself and acquire this token. Token must be valid to call succeeded. To be valid token must be:
-Issued no longer than 10 minutes before the operation
-One of the Primary credentials must be used to acquire this token
-The token owner must have a rights to create user account in the DigitalPersona LDS or DigitalPersona AD database.
-NOTE: This parameter is optional. If user has rights to enroll himself (self-enrollment allowed), caller may provide "null" to this parameter.
-owner	JSON Web Token of the owner of credentials. User should use DigitalPersona Web AUTH Service to authenticate itself and acquire this token. Token must be valid to call succeeded. To be valid token must be:
-Issued no longer than 10 minutes before the operation
-One of the Primary credentials (or same credentials) must be used to acquire this token.
-credential	Credential to be deleted. Note that the Data field of this parameter is specific to each credential. See the definition of the Credential class on page 33 and following.
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Parameter</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">secOfficer</td>
+  <td valign="top">JSON Web Token of the Security Officer. The Security Officer should use the DigitalPersona Web AUTH Service to authenticate himself and acquire this token. The token must be valid for the call to succeed. To be valid, a token must be:
+	<BR><BR>
+	1. Issued no longer than 10 minutes before the operation,<BR>2. One of the Primary credentials must be used to acquire this token and<BR>3. The token owner must have the necessary rights to create the user account in the DigitalPersona AD/LDS  database.<BR><BR>
+	<b>NOTE</b>: This parameter is optional. If the user has the necessary rights to enroll himself (i.e. self-enrollment is allowed), the caller may provide "null" to this parameter.
+	</tr>
+	<tr>
+	<td>owner</td>
+	<td>JSON Web Token of the owner of credentials. User should use DigitalPersona Web AUTH Service to authenticate itself and acquire this token. Token must be valid to call succeeded. To be valid, a token must be:
+	<BR><BR>1. Issued no longer than 10 minutes before the operation, and<BR>
+	2. One of the Primary credentials (or the same credentials) must be used to acquire this token.</td>
+  </tr>
+	<tr><td>credential</td>
+	<td>Credential to be deleted. Note that the Data field of this parameter is specific to each credential. See the definition of the Credential class on page 33 and following.</td>
+</table>
 
-Example
-Below is example of a URL which can be used to DELETE DeleteUserCredentials request:
+#### Example
+Below is an example of a URL which can be used to DELETE DeleteUserCredentials request:
+~~~
 https://www.somecompany.com/DPWebEnrollService.svc/DeleteUserCredentials
 Below is example of HTTP BODY of DeleteUserCredentials request:
 {
@@ -485,23 +517,49 @@ Below is example of HTTP BODY of DeleteUserCredentials request:
 		"data":"Z3NhZGhhc2Rma0FTREZLYWZyZGtB"
 	}
 }
-The call above deletes any fingerprint credentials for the user specified in the "owner" token.
-EnrollAltusUserCredentials method
-The EnrollAltusUserCredentials method enrolls (or re-enrolls) specific credentials for specific user and store credential data in the DigitalPersona database. This method will work only for Non AD users and the DigitalPersona LDS Server backend. For AD users, the function will return Access Denied.
-This method is different from EnrollUserCredentials because it allows enroll user credentials without user being previously authenticated. Only authentication of Security Officer is required. By default the DigitalPersona Server requires the user to be authenticated to enroll credentials so we introduce new GPO setting: AllowSecurityOfficerEnrollment. If this GPO is not configured or set to 0, EnrollAltusUserCredentials function will always return Access Denied error. If this GPO set to 1 and Security Officer has rights to enroll this particular user, enrollment will be performed.
-Syntax
+~~~
+The call above deletes any fingerprint credentials for the user specified in the "owner" token.  
+
+### EnrollAltusUserCredentials method
+The EnrollAltusUserCredentials method enrolls (or re-enrolls) specific credentials for specific user and store credential data in the DigitalPersona database.  
+
+This method will work only for Non AD users and the DigitalPersona LDS Server backend. For AD users, the function will return Access Denied.  
+
+This method is different from EnrollUserCredentials in that it allows enrolling user credentials without the user being previously authenticated. Only authentication of the Security Officer is required.  
+
+By default the DigitalPersona Server requires the user to be authenticated to enroll credentials, so this functionality must be enabled through the GPO setting: AllowSecurityOfficerEnrollment.
+- If this GPO is not configured or is set to 0, the EnrollAltusUserCredentials function will always return an 'Access Denied' error.  
+- If this GPO set to 1 and Security Officer has rights to enroll this particular user, enrollment will be performed.  
+
+##### Syntax
+~~~
 void EnrollAltusUserCredentials(Ticket secOfficer, User user, Credential credential);
+~~~
 
-Parameter	Description
-secOfficer	JSON Web Token of Security Officer. Security Officer should use DigitalPersona Web AUTH Service to authenticate itself and acquire this token. Token must be valid to call succeeded. To be valid, a token must be:
-Issued no longer than 10 minutes before the operation
-One of the Primary credentials must be used to acquire this token
-The token owner must have a rights to enroll user in the DigitalPersona LDS database.
-user	User which credentials needs to be enrolled. Only Non AD users can be accepted by this function. See the definition of the User class on page 68.
-credential	Credential to be deleted. Note that the Data field of this parameter is specific to each credential. See the definition of the Credential class on page 33 and following.
 
-EnrollAltusUserCredentials should be implemented as HTTP PUT using JSON as response format.
-Below is example of URL which can be used to PUT EnrollAltusUserCredentials request:
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Parameter</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">secOfficer</td>
+  <td valign="top">JSON Web Token of the Security Officer. The Security Officer should use the DigitalPersona Web AUTH Service to authenticate himself and acquire this token. The token must be valid for the call to succeed. To be valid, a token must be:
+	<BR><BR>
+	1. Issued no longer than 10 minutes before the operation,<BR>2. One of the Primary credentials must be used to acquire this token and<BR>3. The token owner must have the necessary rights to create the user account in the DigitalPersona LDS  database.<BR><BR>
+	</tr>
+	<tr>
+	<td>user</td>
+	<td>User which credentials needs to be enrolled. Only Non AD users can be accepted by this function. See the definition of the User class on page 68.</td>
+  </tr>
+	<tr><td>credential</td>
+	<td>Credential to be enrolled. Note that the Data field of this parameter is specific to each credential. See the definition of the Credential class on page 33 and following.</td>
+</table>
+
+EnrollAltusUserCredentials should be implemented as HTTP PUT using JSON as the response format.  
+
+Below is an example of a URL which can be used to PUT the  EnrollAltusUserCredentials request:  
+~~~
 https://www.digitalpersona.com/DPWebEnrollService.svc/EnrollAltusUserCredentials
 Below is example of HTTP BODY of EnrollAltusUserCredentials request:
 {
@@ -517,9 +575,11 @@ Below is example of HTTP BODY of EnrollAltusUserCredentials request:
 			"data":"Z3NhZGhhc2Rma0FTREZLYWZyZGtB"
 		}
 }
-The call above enrolls fingerprint credentials for the Non AD user "someone".
-NOTE: This method can be used to Reset a Non AD user’s password without user intervention.
-NOTE: This method also can be used to Randomize user Password. To randomize user password caller must provide "null" in data parameter in "credential" class. Below is an example of Password Randomization request:
+~~~
+The call above enrolls fingerprint credentials for the Non AD user "someone".  
+
+NOTE: This method can be used to Reset a Non AD user’s password without user intervention. It can aslo be used to Randomize a user's password. To randomize a user password the caller must provide "null" in the data parameter of the "credential" class. Below is an example of a password randomization request:
+~~~
 {
 	"secOfficer":{"jwt":"Z3NhZGhhc2Rma0FTREZLYWZyZGtB"},
 	"user":
@@ -533,23 +593,47 @@ NOTE: This method also can be used to Randomize user Password. To randomize user
 			"data":null
 		}
 }
-DeleteAltusUserCredentials method
-DeleteAltusUserCredentials method deletes (un-enrolls) specific credentials for a specific Non AD user and removes credential data from the DigitalPersona database. This method will work only for Non AD users. For AD users it will return Access Denied.
-This method is different from DeleteUserCredentials because it allows delete user credentials without user being previously authenticated. Only authentication of Security Officer is required. By default the DigitalPersona Server requires the user to be authenticated to delete credentials so we introduce new GPO setting: AllowSecurityOfficerEnrollment. If this GPO is not configured or set to 0, DeleteAltusUserCredentials function will always return Access Denied error. If this GPO set to 1 and Security Officer has rights to enroll this particular user, credential deletion will be performed.
-Syntax
+~~~
+
+### DeleteAltusUserCredentials method  
+
+The DeleteAltusUserCredentials method deletes (un-enrolls) specific credentials for a specific Non AD user and removes the associated credential data from the DigitalPersona database. This method will work only for Non AD users. For AD users it will return Access Denied.  
+
+This method is different from the DeleteUserCredentials in that it allows deleting user credentials without the user being previously authenticated. Only authentication of Security Officer is required.  
+
+By default the DigitalPersona Server requires the user to be authenticated to delete credentials, so this functionality must be enabled through the GPO setting: AllowSecurityOfficerEnrollment.
+- If this GPO is not configured or is set to 0, the DeleteAltusUserCredentials function will always return an 'Access Denied' error.  
+- If this GPO set to 1 and the Security Officer has rights to delete this particular user, credential deletion will be performed.  
+
+##### Syntax
+~~~
 void DeleteAltusUserCredentials(Ticket secOfficer, User user, Credential credential);
+~~~
 
-Parameter	Description
-secOfficer	JSON Web Token of Security Officer. Security Officer should use DigitalPersona Web AUTH Service to authenticate itself and acquire this token. Token must be valid to call succeed. To be valid, a token must be:
-Issued no longer than 10 minutes before the operation
-One of the Primary credentials must be used to acquire this token
-The token owner must have a rights to enroll user in the DigitalPersona database (LDS version) or in Active Directory (AD version).
-NOTE: This parameter is optional. If user has rights to enroll himself (self-enrollment allowed), caller may provide "null" to this parameter.
-user	User whose credentials needs to be deleted. See the definition of the User class on page 68.
-credential	Credential to be deleted. Note that the Data field of this parameter is specific to each credential. See the definition of the Credential class on page 33 and following.
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Parameter</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">secOfficer</td>
+  <td valign="top">JSON Web Token of the Security Officer. The Security Officer should use the DigitalPersona Web AUTH Service to authenticate himself and acquire this token. The token must be valid for the call to succeed. To be valid, a token must be:
+	<BR><BR>
+	1. Issued no longer than 10 minutes before the operation,<BR>2. One of the Primary credentials must be used to acquire this token and<BR>3. The token owner must have a rights to enroll user in the DigitalPersona database (LDS version) or in Active Directory (AD version).<BR><BR>
+	NOTE: This parameter is optional. If the user has the rights to enroll himself (i.e. self-enrollment is allowed), the caller may provide "null" to this parameter.<BR><BR>
+	</tr>
+	<tr>
+	<td>user</td>
+	<td>User which credentials needs to be deleted. See the definition of the User class on page 68.</td>
+  </tr>
+	<tr><td>credential</td>
+	<td>Credential to be deleted. Note that the Data field of this parameter is specific to each credential. See the definition of the Credential class on page 33 and following.</td>
+</table>
 
-DeleteAltusUserCredentials should be implemented as HTTP DELETE using JSON as response format.
-Below is example of URL which can be used to DELETE DeleteAltusUserCredentials request:
+DeleteAltusUserCredentials should be implemented as HTTP DELETE using JSON as the response format.  
+
+Below is an example of a URL which can be used to submit a  DeleteAltusUserCredentials request:
+~~~
 https://www.digitalpersona.com/DPWebEnrollService.svc/DeleteAltusUserCredentials
 Below is example of HTTP BODY of DeleteAltusUserCredentials request:
 {
@@ -565,22 +649,47 @@ Below is example of HTTP BODY of DeleteAltusUserCredentials request:
 		"data":"Z3NhZGhhc2Rma0FTREZLYWZyZGtB"
 	}
 }
-The call above delete fingerprint credentials for Non AD user "someone".
-GetUserAttribute method
-GetUserAttribute method request some public (biographic) information about user, like user surname, date of birth, e-mail address, etc.
-GetUserAttribute should be implemented as HTTP POST using JSON as response format.
-Syntax
+~~~
+The call above deletes the fingerprint credentials for the Non AD user "someone".  
+
+### GetUserAttribute method
+
+The GetUserAttribute method requests some public (biographic) information about a user, such as their user surname, date of birth, e-mail address, etc.  
+
+GetUserAttribute should be implemented as HTTP POST using JSON as the response format.  
+
+#### Syntax
+~~~
 Attribute GetUserAttribute(Ticket ticket, User user, String attributeName);
+~~~
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Parameter</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">ticket</td>
+  <td valign="top">JSON Web Token of user requesting the information. This could be an attribute owner, Security Officer, Administrator or any user who has rights to read this information. The token must be valid for the call to succeed. To be valid, a token must be:
+	<BR><BR>
+	1. Issued no longer than 10 minutes before the operation,<BR>2. One of the Primary credentials must be used to acquire this token and<BR>3. The token owner must have the necessary rights to read this user's attribute in the  DigitalPersona (AD LDS) or DigitalPersona AD (Active Directory) database.</td>
+  </tr>
+	<tr>
+	<td valign="top">user</td>
+	<td valign="top">The user requesting the information. See the definition of the User class on page 68.</td>
+	</tr>
+	<tr>
+	<td valign="top">attributeName</td>
+	<td valign="top">Name of the attribute requested. Both AD and AD LDS are LDAP databases, so this name must be the Ldap-Display-Name of the Attribute Schema in the User object of the LDAP database.</td>
+	</tr>
+</table>
 
-Parameter	Description
-ticket	JSON Web Token of user who requests this information. This could be an attribute owner, Security Officer, Administrator or any user who has rights to read this information. Token must be valid to call succeed. To be valid token must be: 1) issued no longer than 10 minutes before the operation, 2) one of the Primary credentials must be used to acquire this token and 3) token owner must have a rights to read this attribute user in DigitalPersona (AD LDS) or DigitalPersona AD (Active Directory) database.
-user	User which information requested. See the definition of the User class on page 68.
-attributeName	Name of the information requested. Both AD and AD LDS are LDAP databases so this name must be Ldap-Display-Name of Attribute Schema in User object in LDAP database.
+##### Return values  
 
-Return values
-JSON representation of object of Attribute class will be returned if the call succeeds. For details on the Attribute class, see the topic Attribute class on page 29.
-Examples
-Below is an example of a URL which can be used to POST GetUserAttribute request.
+JSON representation of object of Attribute class will be returned if the call succeeds. For details on the Attribute class, see the topic Attribute class on page 29.  
+
+##### Examples
+Below is an example of a URL which can be used to POST a GetUserAttribute request.  
+~~~
 https://www.somecompany.com/DPWebEnrollService.svc/GetUserAttribute
 Below is example of HTTP BODY of GetUserAttribute request:
 {
@@ -592,17 +701,26 @@ Below is example of HTTP BODY of GetUserAttribute request:
 	},
 	"attributeName":"sn"
 }
-The call above requests "Surname" attribute for Active Directory user with UPN name john.doe@somecompany.com.
-The example of return value of this call could be:
+~~~
+
+The call above requests the "Surname" attribute for an Active Directory user with a UPN name of john.doe@somecompany.com.  
+
+An example of the return value for this call might be:  
+
+~~~
 {"GetUserAttributeResult":
 {
 "type":3,
 "values":["Lozin"]
 }
 }
-PutUserAttribute method
-The PutUserAttribute method writes, updates or cleara specific public data (attribute) for the named user. This method makes sense only for DigitalPersona as backend server (AD LDS), for Active Directory Administrator must use standard AD tools to manage attributes (with exception of DP specific attributes).
-PutUserAttribute should be implemented as HTTP PUT using JSON as response format.
+~~~
+### PutUserAttribute method  
+
+The PutUserAttribute method writes, updates or clears specific public data (attribute) for the named user.  
+
+This method makes sense only for DigitalPersona as backend server (AD LDS), for Active Directory Administrator must use standard AD tools to manage attributes (with exception of DP specific attributes).
+PutUserAttribute should be implemented as HTTP PUT using JSON as the response format.
 Syntax
 void PutUserAttribute(Ticket ticket, User user, String attributeName,
 		 AttributeAction action, Attribute attributeData);
