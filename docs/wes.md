@@ -914,7 +914,7 @@ For Boolean attributes, the Json representation is Json Boolean. Below is an exa
 ~~~
 
 The attribute above claims user is deleted from Active Directory.
-##### Integer attributes
+##### Integer attributes 11
 
 For Integer attributes, the Json representation is Json Integer. It is used for all types of integers, such as  Uin8, Uint16, Uint32 and Uint64. Timestamps are  represented as long integers (Uint64). Below is an example of the "userAccountControl" attribute in Active Directory.
 
@@ -925,9 +925,10 @@ For Integer attributes, the Json representation is Json Integer. It is used for 
 }
 ~~~
 
-The attribute above claims users’ password never expires.
+The attribute above claims users’ password never expires.  
 
-##### String attributes
+##### String attributes  
+
 For String attributes, the Json representation is Json String.  
 
 Below is an example of the "otherMailbox" (users' e-mail addresses) attribute in Active Directory.  
