@@ -813,20 +813,20 @@ public enum AttributeAction
     <th style="width:35%" ALIGN="left">Description</th>
   </tr>
   <tr>
-  <td valign="top">clear</td>
-  <td valign="top">Attribute must be cleared. The attributeData argument of the PutUserAttribute method will be ignored and can be "null".</td>
+  	<td valign="top">clear</td>
+  	<td valign="top">Attribute must be cleared. The attributeData argument of the PutUserAttribute method will be ignored and can be "null".</td>
 	<tr>
-	<td valign="top">Update</td>
-	<td valign="top">Attribute will be updated. All previous data in the attribute will be cleared.</td>
+		<td valign="top">Update</td>
+		<td valign="top">Attribute will be updated. All previous data in the attribute will be cleared.</td>
 	</tr>
 	<tr>
-  <td valign="top">Append</td>
-  <td valign="top">The data will be appended to data which already exists in the attribute. Makes sense only for multivalued attributes.</td>
+  	<td valign="top">Append</td>
+  	<td valign="top">The data will be appended to data which already exists in the attribute. Makes sense only for multivalued attributes.</td>
   </tr>
 	<tr>
-<td valign="top">Delete</td>
-<td valign="top">The data provided in the attributeData argument of the PutUserAttribute method will be deleted from the attribute. Makes sense only for multivalued attributes.</td>
-</tr>
+		<td valign="top">Delete</td>
+		<td valign="top">The data provided in the attributeData argument of the PutUserAttribute method will be deleted from the attribute. Makes sense only for multivalued attributes.</td>
+	</tr>
 </table>
 
 ### AttributeType enumeration  
