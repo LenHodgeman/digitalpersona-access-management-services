@@ -440,7 +440,7 @@ void EnrollUserCredentials(Ticket secOfficer, Ticket owner, Credential credentia
   <td valign="top">JSON Web Token of the Security Officer. The Security Officer should use the DigitalPersona Web AUTH Service to authenticate himself and acquire this token. The token must be valid for the call to succeed. To be valid, a token must be:
 	<BR><BR>
 	1. Issued no longer than 10 minutes before the operation,<BR>2. One of the Primary credentials must be used to acquire this token and<BR>3. The token owner must have the necessary rights to create the user account in the DigitalPersona AD/LDS  database.<BR><BR>
-	<b>NOTE</b>: This parameter is optional. If the user has the necessary rights to enroll himself (i.e. self-enrollment is allowed), the caller may provide "null" to this parameter.
+	<b>NOTE</b>: This parameter is optional. If the user has the necessary rights to enroll himself (i.e. self-enrollment is allowed), the caller may provide "null" to this parameter.</td>
 	</tr>
 	<tr>
 	<td>owner</td>
@@ -719,21 +719,50 @@ An example of the return value for this call might be:
 
 The PutUserAttribute method writes, updates or clears specific public data (attribute) for the named user.  
 
-This method makes sense only for DigitalPersona as backend server (AD LDS), for Active Directory Administrator must use standard AD tools to manage attributes (with exception of DP specific attributes).
-PutUserAttribute should be implemented as HTTP PUT using JSON as the response format.
-Syntax
+This method makes sense only when using DigitalPersona as the backend server (AD LDS). For Active Directory, the Administrator must use standard AD tools to manage attributes (with the exception of DP specific attributes).  
+
+PutUserAttribute should be implemented as HTTP PUT using JSON as the response format.  
+
+#### Syntax
+~~~
 void PutUserAttribute(Ticket ticket, User user, String attributeName,
 		 AttributeAction action, Attribute attributeData);
+~~~		 
 
-Parameter	Description
-ticket	JSON Web Token of user who requests attribute modification. This could be an attribute owner, Security Officer, Administrator or any user who has rights to write this information. Token must be valid to call succeed. To be valid token must be: 1) issued no longer than 10 minutes before the operation, 2) one of the Primary credentials must be used to acquire this token and 3) token owner must have a rights to write this attribute user in DigitalPersona (AD LDS) or DigitalPersona AD (Active Directory) database.
-user	User whose attribute needs to be modified. See the definition of the User class on page 68.
-attributeName	Name of the information requested. Both AD and AD LDS are LDAP databases so this name must be Ldap-Display-Name of Attribute Schema in User object in LDAP database.
-action	Action that needs to be taken. It could be Append, Update, Delete or Clear. For additional information, see page 28.
-attributeData	Attribute data that needs to be written. For details on the Attribute class, see the topic Attribute class on page 29.
 
-Examples
-Below is an example of URL which can be used to PUT PutUserAttribute request:
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Parameter</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">ticket</td>
+  <td valign="top">JSON Web Token of user requesting modification of the attribute. This could be an attribute owner, Security Officer, Administrator or any user who has rights to write this information. The token must be valid for the call to succeed. To be valid, a token must be:
+	<BR><BR>
+	1. Issued no longer than 10 minutes before the operation,<BR>2. One of the Primary credentials must be used to acquire this token and<BR>3. The token owner must have the necessary rights to write this user's attribute to  the DigitalPersona (AD LDS) or DigitalPersona AD (Active Directory) database.</td>
+  </tr>
+	<tr>
+	<td valign="top">user</td>
+	<td valign="top">The user whose attribute is to be modified. See the definition of the User class on page 68.</td>
+	</tr>
+	<tr>
+	<td valign="top">attributeName</td>
+	<td valign="top">Name of the attribute requested. Both AD and AD LDS are LDAP databases, so this name must be the Ldap-Display-Name of the Attribute Schema in the User object of the LDAP database.</td>
+	</tr>
+	<tr>
+	<td valign="top">action</td>
+	<td valign="top">Action that needs to be taken. It could be Append, Update, Delete or Clear. For additional information, see page 28.</td>
+	</tr>
+	<tr>
+	<td valign="top">atttributeData</td>
+	<td valign="top">Attribute data that needs to be written. For details on the Attribute class, see the topic Attribute class on page 29.</td>
+	</tr>
+</table>
+
+#### Examples
+
+Below is an example of URL which can be used to submit a PutUserAttribute request:  
+~~~
 https://www.somecompany.com/DPWebEnrollService.svc/PutUserAttribute
 Below is example of HTTP BODY of PutUserAttribute request:
 {
@@ -748,14 +777,21 @@ Below is example of HTTP BODY of PutUserAttribute request:
 	"attributeData":
 	{
 		"type":3,
-		"values":["Lozin"]
+		"values":["smith"]
 	}
 }
-The call above requests update of "Surname" attribute for Active Directory user with UPN name john.doe@somecompany.com. New value should be "Lozin".
-Data Contracts
-Below are the Data Contracts used in the Web Enrollment API. Only the data specific to Web Enrollment is described below. For a description of additional data contracts used in the ,Web Authentication Service API, see page 68 and following.
-AttributeAction enumeration
-AttributeAction enumeration specifies action which could be taken with attribute in PutUserAttribute call.
+~~~
+
+The call above requests an update to the "Surname" attribute for the Active Directory user with a UPN name of john.doe@somecompany.com. The new value should be "smith".
+
+## Data Contracts
+Below are the Data Contracts used in the Web Enrollment API. Only the data specific to Web Enrollment is described below. For a description of additional data contracts used in the ,Web Authentication Service API, see page 68 and following.  
+
+### AttributeAction enumeration  
+
+AttributeAction enumeration specifies the action to be taken with an attribute through the PutUserAttribute call.
+
+~~~
 [DataContract]
 public enum AttributeAction
 {
@@ -768,14 +804,33 @@ public enum AttributeAction
 	[EnumMember]
 	Delete = 4,
 }
-Parameter	Description
-clear	Attribute must be cleared. The attributeData argument of the PutUserAttribute method will be ignored and can be "null".
-Update	Attribute will be updated. All previous data in the attribute will be cleared.
-Append	The data will be appended to data which already exists in the attribute. Makes sense only for multivalued attributes.
-Delete	The data provided in the attributeData argument of the PutUserAttribute method will be deleted from the attribute. Makes sense only for multivalued attributes.
+~~~
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Parameter</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">clear</td>
+  <td valign="top">Attribute must be cleared. The attributeData argument of the PutUserAttribute method will be ignored and can be "null".</td>
+	<tr>
+	<td valign="top">Update</td>
+	<td valign="top">Attribute will be updated. All previous data in the attribute will be cleared.</td>
+	</tr>
+	<tr>
+  <td valign="top">Append</td>
+  <td valign="top">The data will be appended to data which already exists in the attribute. Makes sense only for multivalued attributes.</td>
+  </tr>
+	<tr>
+<td valign="top">Delete</td>
+<td valign="top">The data provided in the attributeData argument of the PutUserAttribute method will be deleted from the attribute. Makes sense only for multivalued attributes.</td>
+</tr>
+</table>
 
-AttributeType enumeration
-AttributeType enumeration specifies type of attribute value(s).
+### AttributeType enumeration  
+The AttributeType enumeration specifies the value type of the attribute.
+
+~~~
 DataContract]
 public enum AttributeType
 {
@@ -788,14 +843,36 @@ public enum AttributeType
 	[EnumMember]
 	Blob = 4,
 }
-Value	Description
-Boolean	Attribute has Boolean value(s).
-Integer	Attribute has Integer value(s).
-String	Attribute has String value(s).
-Blob	Attribute has Blob value(s).
+~~~
 
-Attribute class
-Attribute class is Attribute representation in the Web Enrollment API.
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Value</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">Boolean</td>
+  <td valign="top">The attribute has Boolean value(s).</td>
+  </tr>
+	<tr>
+	<td valign="top">Integer</td>
+	<td valign="top">The attribute has Integer value(s).</td>
+	</tr>
+	<tr>
+	<td valign="top">String</td>
+	<td valign="top">The attribute has String value(s).</td>
+	</tr>
+	<tr>
+	<td valign="top">Blob</td>
+	<td valign="top">The attribute has Blob value(s).</td>
+	</tr>
+</table>
+
+#### Attribute class  
+
+The Attribute class is Attribute representation in the Web Enrollment API.
+
+~~~
 [DataContract]
 	public class Attribute
 	{
@@ -804,6 +881,7 @@ Attribute class is Attribute representation in the Web Enrollment API.
 		[DataMember]
 		public List<Object> values { get; set; }
 	}
+~~~
 
 Parameters	Description
 type	Type of Attribute value(s).
