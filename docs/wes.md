@@ -887,31 +887,60 @@ The Attribute class is Attribute representation in the Web Enrollment API.
 	}
 ~~~
 
-Parameters	Description
-type	Type of Attribute value(s).
-values	Values of attribute. We assume all attributes are multivalued because singlevalued attributes are a subset  of multivalued attributes. Below we give details of Json representation for attributes of different types.
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Parameters</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">type</td>
+  <td valign="top">Type of Attribute value(s).</td>
+  </tr>
+	<tr>
+	<td valign="top">values</td>
+	<td valign="top">	Values of attribute. We assume all attributes are multivalued because singlevalued attributes are a subset  of multivalued attributes.<BR><BR>
+	Below we give details of Json representation for attributes of different types.</td>
+	</tr>
+</table>
 
-Boolean attributes
-For Boolean attributes, the Json representation would be Json Boolean. Below is an example of the "isDeleted" attribute in Active Directory:.
+##### Boolean attributes
+For Boolean attributes, the Json representation is Json Boolean. Below is an example of the "isDeleted" attribute in Active Directory.
+
+~~~
 {
 	"type":1,
 	"values":[true]
 }
+~~~
+
 The attribute above claims user is deleted from Active Directory.
-Integer attributes
-For Integer attributes Json representation would be Json Integer. We will use Json integer for all types of integers like Uin8, Uint16, Uint32 and Uint64. Timestamps will be also represented as long integers (Uint64). Below is an example of "userAccountControl" attribute in Active Directory.
+##### Integer attributes
+
+For Integer attributes, the Json representation is Json Integer. It is used for all types of integers, such as  Uin8, Uint16, Uint32 and Uint64. Timestamps are  represented as long integers (Uint64). Below is an example of the "userAccountControl" attribute in Active Directory.
+
+~~~
 {
 	"type":2,
 	"values":[65536]
 }
+~~~
+
 The attribute above claims users’ password never expires.
-String attributes
-For String attributes Json representation would be Json String. Below is an example of "otherMailbox" (users' e-mail addresses) attribute in Active Directory.
+
+##### String attributes
+For String attributes, the Json representation is Json String.  
+
+Below is an example of the "otherMailbox" (users' e-mail addresses) attribute in Active Directory.  
+
+~~~
 {
 	"type":3,
 	"values":["john.doe@somecompany.com","john.doe@mycompany.com"]
 }
-The attribute above has all users e-mail addresses.
+~~~
+
+The attribute above contains all of the user's e-mail addresses.  
+
 Blob attributes
 For Blob attributes Json representation would be Json String. To convert Blob to a string, we should use Base64UrlEncoding. Below is an example of "thumbnailPhoto" attribute in Active Directory:
 {
