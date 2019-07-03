@@ -829,7 +829,7 @@ public enum AttributeAction
 	</tr>
 </table>
 
-### AttributeType enumeration  
+### AttributeType enumeration  1 
 The AttributeType enumeration specifies the value type of the attribute.
 
 ~~~
