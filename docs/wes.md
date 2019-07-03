@@ -491,7 +491,7 @@ void DeleteUserCredentials(Ticket secOfficer, Ticket owner, Credential credentia
   <td valign="top">JSON Web Token of the Security Officer. The Security Officer should use the DigitalPersona Web AUTH Service to authenticate himself and acquire this token. The token must be valid for the call to succeed. To be valid, a token must be:
 	<BR><BR>
 	1. Issued no longer than 10 minutes before the operation,<BR>2. One of the Primary credentials must be used to acquire this token and<BR>3. The token owner must have the necessary rights to create the user account in the DigitalPersona AD/LDS  database.<BR><BR>
-	<b>NOTE</b>: This parameter is optional. If the user has the necessary rights to enroll himself (i.e. self-enrollment is allowed), the caller may provide "null" to this parameter.
+	<b>NOTE</b>: This parameter is optional. If the user has the necessary rights to enroll himself (i.e. self-enrollment is allowed), the caller may provide "null" to this parameter.</td>
 	</tr>
 	<tr>
 	<td>owner</td>
@@ -501,6 +501,7 @@ void DeleteUserCredentials(Ticket secOfficer, Ticket owner, Credential credentia
   </tr>
 	<tr><td>credential</td>
 	<td>Credential to be deleted. Note that the Data field of this parameter is specific to each credential. See the definition of the Credential class on page 33 and following.</td>
+	</tr>
 </table>
 
 #### Example
@@ -546,14 +547,14 @@ void EnrollAltusUserCredentials(Ticket secOfficer, User user, Credential credent
   <td valign="top">secOfficer</td>
   <td valign="top">JSON Web Token of the Security Officer. The Security Officer should use the DigitalPersona Web AUTH Service to authenticate himself and acquire this token. The token must be valid for the call to succeed. To be valid, a token must be:
 	<BR><BR>
-	1. Issued no longer than 10 minutes before the operation,<BR>2. One of the Primary credentials must be used to acquire this token and<BR>3. The token owner must have the necessary rights to create the user account in the DigitalPersona LDS  database.<BR><BR>
+	1. Issued no longer than 10 minutes before the operation,<BR>2. One of the Primary credentials must be used to acquire this token and<BR>3. The token owner must have the necessary rights to create the user account in the DigitalPersona LDS  database.</td>
 	</tr>
 	<tr>
 	<td>user</td>
 	<td>User which credentials needs to be enrolled. Only Non AD users can be accepted by this function. See the definition of the User class on page 68.</td>
   </tr>
 	<tr><td>credential</td>
-	<td>Credential to be enrolled. Note that the Data field of this parameter is specific to each credential. See the definition of the Credential class on page 33 and following.</td>
+	<td>Credential to be enrolled. Note that the Data field of this parameter is specific to each credential. See the definition of the Credential class on page 33 and following.</td></tr>
 </table>
 
 EnrollAltusUserCredentials should be implemented as HTTP PUT using JSON as the response format.  
@@ -620,7 +621,7 @@ void DeleteAltusUserCredentials(Ticket secOfficer, User user, Credential credent
   <td valign="top">JSON Web Token of the Security Officer. The Security Officer should use the DigitalPersona Web AUTH Service to authenticate himself and acquire this token. The token must be valid for the call to succeed. To be valid, a token must be:
 	<BR><BR>
 	1. Issued no longer than 10 minutes before the operation,<BR>2. One of the Primary credentials must be used to acquire this token and<BR>3. The token owner must have a rights to enroll user in the DigitalPersona database (LDS version) or in Active Directory (AD version).<BR><BR>
-	NOTE: This parameter is optional. If the user has the rights to enroll himself (i.e. self-enrollment is allowed), the caller may provide "null" to this parameter.<BR><BR>
+	NOTE: This parameter is optional. If the user has the rights to enroll himself (i.e. self-enrollment is allowed), the caller may provide "null" to this parameter.<td>
 	</tr>
 	<tr>
 	<td>user</td>
@@ -628,6 +629,7 @@ void DeleteAltusUserCredentials(Ticket secOfficer, User user, Credential credent
   </tr>
 	<tr><td>credential</td>
 	<td>Credential to be deleted. Note that the Data field of this parameter is specific to each credential. See the definition of the Credential class on page 33 and following.</td>
+	</tr>
 </table>
 
 DeleteAltusUserCredentials should be implemented as HTTP DELETE using JSON as the response format.  
