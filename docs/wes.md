@@ -941,27 +941,59 @@ Below is an example of the "otherMailbox" (users' e-mail addresses) attribute in
 
 The attribute above contains all of the user's e-mail addresses.  
 
-Blob attributes
-For Blob attributes Json representation would be Json String. To convert Blob to a string, we should use Base64UrlEncoding. Below is an example of "thumbnailPhoto" attribute in Active Directory:
+##### Blob attributes
+
+For Blob attributes,  the Json representation is the Json String. To convert the Blob to a string, we use  Base64UrlEncoding. Below is an example of the  "thumbnailPhoto" attribute in Active Directory.
+
+~~~
 {
 	"type":4,
 	"values":["Z3NhZGhhc2Rma0FTREZLYWZyZGtB"]
 }
-The attribute above has Base64UrlEncoded users' thumbnail photo.
-CustomAction method
-CustomAction method performs credential specific operation (custom action) for specific user. CustomAction should be implemented as HTTP POST using JSON as response format. For further details, see CustomAction method on page 64.
-Syntax
-void CustomAction(Ticket ticket, User user, Credential credential, UInt16 actionId);
-Parameters	Description
-ticket	JSON Web Token of person who wants to perform CustomAction operation. This parameter is optional because not all CustomAction require Access Control so caller may provide "null" to this parameter.
-user	User to whom CustomAction needs to be performed. This parameter is optional because not all CustomAction operations are performed to specific user so caller may provide "null" to this parameter.
-credential
-Credential to which CustomAction needs to be performed. Id attribute of Credential class should point to valid DigitalPersona Credential. Data attribute of Credential class should point to Base64Url encoded credential specific data and could be set to "null".
-credential	Credential to which CustomAction needs to be performed. Id attribute of Credential class should point to valid DigitalPersona Credential. Data attribute of Credential class should point to Base64Url encoded credential specific data and could be set to "null".
+~~~
 
-Below is example of URL which can be used to POST CustomAction request:
+The attribute above has the Base64UrlEncoded user's  thumbnail photo.
+
+#### CustomAction method
+
+The CustomAction method performs credential specific operations (custom actions) for a specified user.
+
+CustomAction should be implemented as HTTP POST using JSON as the response format. For further details, see the CustomAction method on page 64.  
+
+##### Syntax
+
+~~~
+void CustomAction(Ticket ticket, User user, Credential credential, UInt16 actionId);
+~~~  
+
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Parameter</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">ticket</td>
+  <td valign="top">ticket	JSON Web Token of the person initiating the CustomAction operation. This parameter is optional since not all CustomActions require Access Control. Therefore the caller may provide "null" to this parameter.</td>
+  </tr>
+	<tr>
+   <td valign="top">user</td>
+   <td valign="top">The user whose record the CustomAction is performed upon. This parameter is optional since not all CustomAction operations are performed upon a specific user. Therefore the caller may provide "null" to this parameter.</td>
+   </tr>
+	 <tr>
+ <td valign="top">credential</td>
+ <td valign="top">Credential to which CustomAction needs to be performed. Id attribute of Credential class should point to valid DigitalPersona Credential. Data attribute of Credential class should point to Base64Url encoded credential specific data and could be set to "null".</td>
+ </tr> 	
+</table>
+
+Below is an example of a URL used to POST a CustomAction request.
+
+~~~
 https://www.digitalpersona.com/DPWebEnrollService.svc/CustomAction
-Below is example of HTTP BODY of CustomAction request:
+~~~
+
+Below is example of the HTTP BODY of the CustomAction request.
+
+~~~
 {
 	"ticket":{"jwt":"Z3NhZGhhc2Rma0FTREZLYWZyZGtB"},
 	"user":
@@ -976,19 +1008,44 @@ Below is example of HTTP BODY of CustomAction request:
 	},
 	"actionId":9
 }
-The call above send CustomAction request to fingerprint credentials with actionId 6 for DigitalPersona user "someone".
-This call should return Base64Encoded output data of CustomAction call. The returned information is credential specific and should be provided "Web Authentication Service Credentials Data Format" document.
-UnlockUser method
-UnlockUser method performs self unlocking currently locked user.
-Syntax
+~~~
+
+The call above sends a CustomAction request to fingerprint credentials with actionId 6 for DigitalPersona user "someone".
+This call should return Base64Encoded output data of CustomAction call. The returned information is credential specific **<mark style="color:Red;"> and should be provided "Web Authentication Service Credentials Data Format" document.</mark>**  
+
+#### UnlockUser method  
+
+The UnlockUser method performs self unlocking for a currently locked user.  
+
+##### Syntax  
+
+~~~
 void UnlockUser(User user, Credential credential);
+~~~
 
-Parameters	Description
-user	User whose account needs to be unlocked.
-credential	A valid user credentials (we consider Live Questions credentials here) to be verified before the account gets unlocked.
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Parameter</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">user</td>
+  <td valign="top">The user whose account needs to be unlocked.</td>
+  </tr>
+	<tr>
+  <td valign="top">credential</td>
+  <td valign="top">A valid user credential (including the  Recovery Questions credential) that is to be verified before the account gets unlocked.</td>
+  </tr> 	
+</table>
 
-UnlockUser should be implemented as HTTP POST using JSON as response format.
-Below is example of URL which can be used to POST UnlockUser request:
+UnlockUser should be implemented as an HTTP POST using JSON as the response format.  
+
+Below is an example of a URL  used to POST an UnlockUser request.  
+
+~~~
 https://www.digitalpersona.com/DPWebEnrollService.svc/UnlockUser
-NOTE: To be able to self-unlock own account the following GPO must be enabled on AD (or LDS) server:
-			Allow users to unlock their Windows account using DigitalPersona Recovery Questions.
+~~~
+
+**NOTE**: For a user to be able to unlock their own account, the following GPO must be enabled on the DigitalPersona AD or LDS server.  
+
+*Allow users to unlock their Windows account using DigitalPersona Recovery Questions.*
