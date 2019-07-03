@@ -449,7 +449,7 @@ void EnrollUserCredentials(Ticket secOfficer, Ticket owner, Credential credentia
 	2. One of the Primary credentials (or the same credentials) must be used to acquire this token.</td>
   </tr>
 	<tr><td>credential</td>
-	<td>Credential to be enrolled. Note that the Data field of this parameter is specific to each credential. See the definition of the Credential class on page 33 and following.</td>
+	<td>Credential to be enrolled. Note that the Data field of this parameter is specific to each credential. See the definition of the Credential class on page 33 and following.</td></tr>
 </table>  
 
 #### Examples
