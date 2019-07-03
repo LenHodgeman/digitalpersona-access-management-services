@@ -532,7 +532,7 @@ By default the DigitalPersona Server requires the user to be authenticated to en
 - If this GPO is not configured or is set to 0, the EnrollAltusUserCredentials function will always return an 'Access Denied' error.  
 - If this GPO set to 1 and Security Officer has rights to enroll this particular user, enrollment will be performed.  
 
-##### Syntax
+#### Syntax
 ~~~
 void EnrollAltusUserCredentials(Ticket secOfficer, User user, Credential credential);
 ~~~
@@ -606,7 +606,7 @@ By default the DigitalPersona Server requires the user to be authenticated to de
 - If this GPO is not configured or is set to 0, the DeleteAltusUserCredentials function will always return an 'Access Denied' error.  
 - If this GPO set to 1 and the Security Officer has rights to delete this particular user, credential deletion will be performed.  
 
-##### Syntax
+#### Syntax
 ~~~
 void DeleteAltusUserCredentials(Ticket secOfficer, User user, Credential credential);
 ~~~
@@ -685,11 +685,11 @@ Attribute GetUserAttribute(Ticket ticket, User user, String attributeName);
 	</tr>
 </table>
 
-##### Return values  
+#### Return values  
 
 JSON representation of object of Attribute class will be returned if the call succeeds. For details on the Attribute class, see the topic Attribute class on page 29.  
 
-##### Examples
+#### Examples
 Below is an example of a URL which can be used to POST a GetUserAttribute request.  
 ~~~
 https://www.somecompany.com/DPWebEnrollService.svc/GetUserAttribute
@@ -872,7 +872,7 @@ public enum AttributeType
 	</tr>
 </table>
 
-#### Attribute class  
+### Attribute class  
 
 The Attribute class is Attribute representation in the Web Enrollment API.
 
@@ -903,7 +903,7 @@ The Attribute class is Attribute representation in the Web Enrollment API.
 	</tr>
 </table>
 
-##### Boolean attributes
+#### Boolean attributes
 For Boolean attributes, the Json representation is Json Boolean. Below is an example of the "isDeleted" attribute in Active Directory.
 
 ~~~
@@ -914,7 +914,7 @@ For Boolean attributes, the Json representation is Json Boolean. Below is an exa
 ~~~
 
 The attribute above claims user is deleted from Active Directory.
-##### Integer attributes 11
+#### Integer attributes
 
 For Integer attributes, the Json representation is Json Integer. It is used for all types of integers, such as  Uin8, Uint16, Uint32 and Uint64. Timestamps are  represented as long integers (Uint64). Below is an example of the "userAccountControl" attribute in Active Directory.
 
@@ -927,7 +927,7 @@ For Integer attributes, the Json representation is Json Integer. It is used for 
 
 The attribute above claims users’ password never expires.  
 
-##### String attributes  
+#### String attributes  
 
 For String attributes, the Json representation is Json String.  
 
@@ -942,7 +942,7 @@ Below is an example of the "otherMailbox" (users' e-mail addresses) attribute in
 
 The attribute above contains all of the user's e-mail addresses.  
 
-##### Blob attributes
+#### Blob attributes
 
 For Blob attributes,  the Json representation is the Json String. To convert the Blob to a string, we use  Base64UrlEncoding. Below is an example of the  "thumbnailPhoto" attribute in Active Directory.
 
@@ -955,13 +955,13 @@ For Blob attributes,  the Json representation is the Json String. To convert the
 
 The attribute above has the Base64UrlEncoded user's  thumbnail photo.
 
-#### CustomAction method
+### CustomAction method
 
 The CustomAction method performs credential specific operations (custom actions) for a specified user.
 
 CustomAction should be implemented as HTTP POST using JSON as the response format. For further details, see the CustomAction method on page 64.  
 
-##### Syntax
+#### Syntax
 
 ~~~
 void CustomAction(Ticket ticket, User user, Credential credential, UInt16 actionId);
@@ -1014,11 +1014,11 @@ Below is example of the HTTP BODY of the CustomAction request.
 The call above sends a CustomAction request to fingerprint credentials with actionId 6 for DigitalPersona user "someone".
 This call should return Base64Encoded output data of CustomAction call. The returned information is credential specific **<mark style="color:Red;"> and should be provided "Web Authentication Service Credentials Data Format" document.</mark>**  
 
-#### UnlockUser method  
+### UnlockUser method  
 
 The UnlockUser method performs self unlocking for a currently locked user.  
 
-##### Syntax  
+#### Syntax  
 
 ~~~
 void UnlockUser(User user, Credential credential);
