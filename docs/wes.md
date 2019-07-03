@@ -621,7 +621,7 @@ void DeleteAltusUserCredentials(Ticket secOfficer, User user, Credential credent
   <td valign="top">JSON Web Token of the Security Officer. The Security Officer should use the DigitalPersona Web AUTH Service to authenticate himself and acquire this token. The token must be valid for the call to succeed. To be valid, a token must be:
 	<BR><BR>
 	1. Issued no longer than 10 minutes before the operation,<BR>2. One of the Primary credentials must be used to acquire this token and<BR>3. The token owner must have a rights to enroll user in the DigitalPersona database (LDS version) or in Active Directory (AD version).<BR><BR>
-	NOTE: This parameter is optional. If the user has the rights to enroll himself (i.e. self-enrollment is allowed), the caller may provide "null" to this parameter.<td>
+	NOTE: This parameter is optional. If the user has the rights to enroll himself (i.e. self-enrollment is allowed), the caller may provide "null" to this parameter.</td>
 	</tr>
 	<tr>
 	<td>user</td>
@@ -887,10 +887,10 @@ The Attribute class is Attribute representation in the Web Enrollment API.
 
 Parameters	Description
 type	Type of Attribute value(s).
-values	Values of attribute. We assume all attributes are multivalued because singlevalued attributes are a subsystem of multivalued attributes. Below we give details of Json representation of attributes of different types.
+values	Values of attribute. We assume all attributes are multivalued because singlevalued attributes are a subset  of multivalued attributes. Below we give details of Json representation for attributes of different types.
 
 Boolean attributes
-For Boolean attributes Json representation would be Json Boolean. Below is an example of "isDeleted" attribute in Active Directory:.
+For Boolean attributes, the Json representation would be Json Boolean. Below is an example of the "isDeleted" attribute in Active Directory:.
 {
 	"type":1,
 	"values":[true]
