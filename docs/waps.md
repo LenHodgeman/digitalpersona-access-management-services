@@ -4,6 +4,6 @@ title: Web Authentication Policy Service
 nav_order: 4
 ---
 
-## Web Authetication Policy Service
+## Web Authentication Policy Service
 
 [TBD]
