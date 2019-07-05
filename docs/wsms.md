@@ -424,12 +424,16 @@ public enum ResourceActions
   Delete = 2,
 }
 
-We support only these actions in the current version of the API.
-Read
-Write
-Delete.
-PolicyElement class
-The PolicyElement class describes one policy element or Credential.
+We support only these actions in the current version of the API.  
+- Read  
+- Write  
+- Delete  
+
+### PolicyElement class  
+
+The PolicyElement class describes one policy element or credential.  
+
+~~~  
 public class PolicyElement
 	{
   public PolicyElement(String id)
@@ -438,26 +442,75 @@ public class PolicyElement
   }
   [DataMember]
   public String cred_id { get; set; }
-  }
-Parameter	Description
-cred_id	Unique Id of credential.
+  }  
+~~~
 
-The following credentials are supported in this version.
-{D1A1F561-E14A-4699-9138-2EB523E132CC} – User password;
-{AC184A13-60AB-40e5-A514-E10F777EC2F9} – Fingerprints;
-{8A6FCEC3-3C8A-40c2-8AC0-A039EC01BA05} – PIN;
-{D66CC98D-4153-4987-8EBE-FB46E848EA98} – Smart Cards;
-{F674862D-AC70-48ca-B73E-64A22F3BAC44} – Contactless/Proximity cards;
-{B49E99C6-6C94-42DE-ACD7-FD6B415DF503} – Live Questions;
-{E750A180-577B-47f7-ACD9-F89A7E27FA49} – Bluetooth;
-** MISSING **
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Parameter</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">cred_id</td>
+  <td valign="top">The unique ID of a credential.</td>
+  </tr>
+</table>
 
-Below is an example of JSON representation of a credential. This policy element describes a Fingerprint credential. You must use the “braceless” GUID representation in our API in URLs and JSON representation.
+The following credentials are supported in this version.  
+
+<table style="width:100%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:27%" ALIGN="left">Credential</th>
+    <th style="width:70%" ALIGN="left">GUID</th>
+  </tr>
+  <tr>
+  	<td valign="top">User password</td>
+  	<td valign="top">D1A1F561-E14A-4699-9138-2EB523E132CC</td>
+  </tr>
+	<tr>
+   	<td valign="top">PIN</td>
+   	<td valign="top">8A6FCEC3-3C8A-40c2-8AC0-A039EC01BA05</td>
+  </tr>
+	<tr>
+	  <td valign="top">Smart Card</td>
+	  <td valign="top">D66CC98D-4153-4987-8EBE-FB46E848EA98</td>
+	</tr>
+	<tr>
+	  <td valign="top">Contactless/Proximity card</td>
+	  <td valign="top">F674862D-AC70-48ca-B73E-64A22F3BAC44</td>
+	</tr>
+	<tr>
+		<td valign="top">Recovery Questions</td>
+		<td valign="top">B49E99C6-6C94-42DE-ACD7-FD6B415DF503</td>
+	</tr>
+	<tr>
+		<td valign="top">Bluetooth</td>
+		<td valign="top">E750A180-577B-47f7-ACD9-F89A7E27FA49</td>
+	</tr>
+	<tr>
+		<td valign="top">? Any missing ?</td>
+		<td valign="top"></td>
+	</tr> 				 			 	
+</table>
+
+#### Note
+
+You must use the “braceless” GUID representation in our API in URLs and JSON representation
+
+#### Example  
+
+Below is an example of the JSON representation for a credential. This policy element describes a Fingerprint credential.
+
+~~~
 {"cred_id":"AC184A13-60AB-40e5-A514-E10F777EC2F9"}
-Policy class
-This class describes one authentication policy. To access a resource multiple authentication policies could be applied. In this case, the relationship between the authentication policies would be OR.
-public class Policy
-	{
+~~~
+
+### Policy class
+
+This class describes one authentication policy. To access a resource, multiple authentication policies can be applied. In this case, the relationship between the authentication policies would be OR.  
+
+~~~ public class Policy
+{
   public Policy()
   {
      policy = new List<PolicyElement>();
@@ -465,15 +518,29 @@ public class Policy
   [DataMember]
   public List<PolicyElement> policy{ get; set; }
 }
-Below is an example of the JSON representation of a policy. This policy describes an authentication policy which requires “Fingerprint AND PIN” credentials to be provided.
-{"policy":[
-{"cred_id":"AC184A13-60AB-40e5-A514-E10F777EC2F9"},
-{"cred_id":"8A6FCEC3-3C8A-40c2-8AC0-A039EC01BA05"}
-]},
-Ticket class
-The result of successful authentication is a Ticket. The format of the Ticket is JSON Web Token (JWT). Additional details about JWT are provided in the topic “JSON Web Token (JWT)” on page 71.
-public class Ticket
+~~~  
+
+#### Example  
+
+Below is an example of the JSON representation of a policy. This policy describes an authentication policy requiring that “Fingerprint AND PIN” credentials must be provided.  
+
+~~~  
+{"policy":  
+	[
+		{"cred_id":"AC184A13-60AB-40e5-A514-E10F777EC2F9"},
+		{"cred_id":"8A6FCEC3-3C8A-40c2-8AC0-A039EC01BA05"}
+	]
+},
+~~~  
+
+### Ticket class
+
+
+The result of a successful authentication is a ticket. The format of the ticket is a JSON Web Token (JWT). Additional details about JWT are provided in the topic “JSON Web Token (JWT)” <mark style="color:Red;">on page 71</mark>.
+
+~~~ public class Ticket
 	{
   [DataMember]
    public String jwt { get; set; } // JSON Web Token
 	}
+~~~
