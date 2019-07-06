@@ -719,8 +719,6 @@ public class User
   </tr>   
 </table>
 
-arameter	Description
-
 The following user name formats are currently supported.
 
 <table style="width:95%;margin-left:auto;margin-right:auto;">
@@ -769,6 +767,8 @@ Below is an example of the JSON representation of a user.
 #### Credential class
 
 Credential class is credential representation in this API.
+
+~~~
 public class Credential
 	{
 	[DataMember]
@@ -776,22 +776,73 @@ public class Credential
 	[DataMember]
 	public String data { get; set; } 																		// Base64 encoded credential data
 	}
-Parameter	Description
-id	Unique Id of credential.
-data	Base64url encoded credential data. The format of this data depends on the credential and is explained in the chapter “Credentials Data Format” on page 44.
+~~~
+
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Parameter</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">id</td>
+  <td valign="top">	Unique Id of credential.</td>
+  </tr>
+  <tr>
+  <td valign="top">data	</td>
+  <td valign="top">Base64url encoded credential data. The format of this data depends on the credential and is explained in <mark style="color:Red;">the chapter “Credentials Data Format” on page 44.<mark></td>
+  </tr>
+</table>
 
 The following credentials are currently supported.
-{D1A1F561-E14A-4699-9138-2EB523E132CC} – User password;
-{AC184A13-60AB-40e5-A514-E10F777EC2F9} – Fingerprints;
-{8A6FCEC3-3C8A-40c2-8AC0-A039EC01BA05} – PIN;
-{D66CC98D-4153-4987-8EBE-FB46E848EA98} – Smart Cards;
-{1F31360C-81C0-4EE0-9ACD-5A4400F66CC2} – Proximity cards;
-{7BF3E290-5BA5-4C2D-AA33-24B48C189399} - Contactless cards;
-{B49E99C6-6C94-42DE-ACD7-FD6B415DF503} – Live Questions;
-{E750A180-577B-47f7-ACD9-F89A7E27FA49} – Bluetooth;
-[MISSING CREDENTIALS]
-Note
+
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Credential</th>
+    <th style="width:35%" ALIGN="left">GUID</th>
+  </tr>
+  <tr>
+  <td valign="top">User password</td>
+  <td valign="top">{D1A1F561-E14A-4699-9138-2EB523E132CC}</td>
+  </tr>
+  <tr>
+  <td valign="top">Fingerprints</td>
+  <td valign="top">{AC184A13-60AB-40e5-A514-E10F777EC2F9}</td>
+  </tr>
+  <tr>
+  <td valign="top">PIN</td>
+  <td valign="top">{8A6FCEC3-3C8A-40c2-8AC0-A039EC01BA05}</td>
+  </tr>
+	<tr>
+  <td valign="top">Smart Cards</td>
+  <td valign="top">{D66CC98D-4153-4987-8EBE-FB46E848EA98}</td>
+  </tr>
+	<tr>
+  <td valign="top">Proximity cards</td>
+  <td valign="top">{1F31360C-81C0-4EE0-9ACD-5A4400F66CC2}</td>
+  </tr>
+	<tr>
+  <td valign="top">Contactless cards</td>
+  <td valign="top">	{7BF3E290-5BA5-4C2D-AA33-24B48C189399}</td>
+  </tr>
+	<tr>
+  <td valign="top">Recovery Questions</td>
+  <td valign="top">{B49E99C6-6C94-42DE-ACD7-FD6B415DF503}</td>
+  </tr>
+	<tr>
+  <td valign="top"> Bluetooth</td>
+  <td valign="top">{E750A180-577B-47f7-ACD9-F89A7E27FA49}</td>
+  </tr> 	
+	<tr>
+  <td valign="top"> ?? MISSING CREDENTIAS ??</td>
+  <td valign="top"></td>
+  </tr> 		 			
+</table>
+
+##### Examples
+
 You must use “braceless” GUID representation in our API in URLs and JSON representation. Below is an example of the JSON representation of a credential.
+
+~~~
 {
 	“credential”:
 	{
@@ -799,17 +850,24 @@ You must use “braceless” GUID representation in our API in URLs and JSON rep
 		“data”:”Z3NhZGhhc2Rma0FTREZLYWZyZGtB”
 	}
 }
-Ticket class
+~~~
+#### Ticket class
 The result of successful authentication is a Ticket.
+
+~~~
 public class Ticket
 	{
 	[DataMember]
 	public String jwt { get; set; } 																		// JSON Web Token
 	}
-The format of the Ticket is JSON Web Token (JWT). See the next section for further details on JWT.
-AuthenticationStatus enumeration
-AuthenticationStatus is enumeration for status of extended authentication operation.
-public enum AuthenticationStatus
+~~~
+The format of the Ticket is a JSON Web Token (JWT). See the next section for further details on JWT.  
+
+#### AuthenticationStatus enumeration
+
+AuthenticationStatus is enumeration for status of extended authentication operation.  
+
+~~~ public enum AuthenticationStatus
 {
 	/// <summary>
 	/// Error happened. Authentication attempt failed.
@@ -829,13 +887,32 @@ public enum AuthenticationStatus
 	[EnumMember]
 	Completed = 2,
 }  
-Status	Description
-Error	Extended Authentication operation is failed.
-Continue	Extended Authentication operation is succeeded but continuation is required.
-Completed	Extended Authentication operation is successfully completed.
+~~~
 
-ExtendedAUTHResult class
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Status</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">Error</td>
+  <td valign="top">Extended Authentication operation failed.</td>
+  </tr>
+  <tr>
+  <td valign="top">Continue	</td>
+  <td valign="top">Extended Authentication operation  succeeded but continuation is required.</td>
+  </tr>
+  <tr>
+  <td valign="top">Completed	</td>
+  <td valign="top">Extended Authentication operation is successfully completed.</td>
+  </tr>
+</table>
+
+#### ExtendedAUTHResult class  
+
 ExtendedAUTHResult class represents result of Extended Authentication operation.
+
+~~~
 public class ExtendedAUTHResult
 {
 	[DataMember]
@@ -848,154 +925,320 @@ public class ExtendedAUTHResult
 	public String jwt{ get; set; } 																			// JWT of successful authentication
 		operation.
     }
+~~~
 
-Parameter	Description
-status	Status of Extended Authentication operation (see 4.11.4 for details).
-authData	Authentication data returned by server. This data would be required to proceed with authentication handshake. This is optional parameter and could be returned if operation status is Continue (handshake continuation is required).
-jwt	JSON Web Token returned by server upon successful authentication. This is optional parameter and should be returned if operation status is Completed (authentication handshake is suucessfuly completed).
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Parameter</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">status</td>
+  <td valign="top">	Status of Extended Authentication operation <mark style="color:Red;"> (see 4.11.4 for details).</mark></td>
+  </tr>
+  <tr>
+  <td valign="top">authData	</td>
+  <td valign="top">Authentication data returned by server. This data is required to proceed with an authentication handshake. This is an optional parameter, and would be returned if the operation status is Continue, i.e. handshake continuation is required.</td>
+  </tr>
+  <tr>
+  <td valign="top">jwt</td>
+  <td valign="top">	JSON Web Token returned by the server upon successful authentication. This is an optional parameter and will be returned if the operation status is Completed, i.e. the authentication handshake is suucessfuly completed).</td>
+  </tr>
+</table>
 
-JSON Web Token (JWT)
-The format of a returned Ticket upon successful authentication is a JSON Web Token. The official specification of JWT is detailed here: https://tools.ietf.org/html/draft-jones-json-web-token-10.
+### JSON Web Token (JWT)  
+
+The format of a returned Ticket upon successful authentication is a JSON Web Token.
+
+The official specification of JWT is detailed at the following location.
+
+https://tools.ietf.org/html/draft-jones-json-web-token-10.  
+
 The JWT token returned by the DigitalPersona Web Authentication Service is constructed as follows.
-The standard JWT has three parts: 1) Header, 2) Claims and 3) Signature.
-All three parts are created separately as UTF-8 strings, then Base64url encoded and finally concatenated in the order above with periods between the parts, yielding the complete JWT.
-Base64url Encoding - for the purposes of this specification, this term always refers to the URL- and filename-safe Base64 encoding described in RFC 4648 [RFC4648], Section 5, with the (non URL-safe) '=' padding characters omitted, as permitted by Section 3.2.
-JWT Header
+
+The standard JWT has three parts:
+1. Header  
+2. Claims
+3. Signature  
+
+All three parts are created separately as UTF-8 strings, then they are Base64url encoded and finally concatenated in the order above with periods between the parts, yielding the complete JWT.
+
+**Base64url Encoding** - For the purposes of this specification, this term always refers to the URL- and filename-safe Base64 encoding described in RFC 4648 [RFC4648], Section 5, with the (non URL-safe) '=' padding characters omitted, as permitted by Section 3.2.  
+
+#### JWT Header
 In the current version of the API, we use the following JWT header.
+
+~~~
 {"typ":"JWT",
  "alg":" RS256"} –
-Value	Description
-"typ":"JWT"	means this is a JSON Web Token.
-"alg":" RS256" 	means we will use RSA with a SHA-256 hash algorithm for the signature.
+~~~
 
-JWT Claims
-The following claims must be included in our JWT (claims order is not defined so they can be presented in any order.
-"jti" (JWT ID) Claim
-The "jti" (JWT ID) claim provides a unique identifier for the JWT. The identifier value must be assigned in a manner that ensures that there is a negligible probability that the same value will be accidentally assigned to a different data object. The "jti" claim can be used to prevent the JWT from being replayed. The "jti" value is case sensitive. Its value must be a string.
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Value</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">"typ":"JWT"</td>
+  <td valign="top">Means this is a JSON Web Token.</td>
+  </tr>
+  <tr>
+  <td valign="top">"alg":" RS256" </td>
+  <td valign="top">Means we will use RSA with a SHA-256 hash algorithm for the signature.</td>
+  </tr>
+</table>
+
+#### JWT Claims  
+
+The following claims must be included in our JWT, although the claims order is not defined so they can be presented in any order.
+
+##### "jti" (JWT ID) Claim  
+
+The "jti" (JWT ID) claim provides a unique identifier for the JWT. The identifier value must be assigned in a manner that ensures that there is a negligible probability that the same value will be accidentally assigned to a different data object. The "jti" claim can be used to prevent the JWT from being replayed. The "jti" value is case sensitive. Its value must be a string.  
+
 The “jti” claim should be a string representation of the GUID randomly generated by the DigitalPersona Server during JWT creation.
+
 Below is an example of this claim.
-"jti":"AC184A13-60AB-40e5-A514-E10F777EC2F9"
-"iss" (Issuer) Claim
-The "iss" (issuer) claim identifies the principal that issued the JWT. For this API, the issuer will always be the DigitalPersona Server, so we include the DigitalPersona Server DNS name in this claim.
+
+~~~
+"jti":"AC184A13-60AB-40e5-A514-E10F777EC2F9"  
+~~~
+
+##### "iss" (Issuer) Claim
+
+The "iss" (issuer) claim identifies the principal that issued the JWT.  
+
+For this API, the issuer will always be the DigitalPersona Server, so we include the DigitalPersona Server DNS name in this claim.  
+
+Below is an example of this claim.  
+
+~~~
+"iss":"altus-01.mydomain.com"  
+~~~
+
+#### "dom" (Issuer Domain) Claim  
+
+The "dom" (issuer domain) claim identifies the domain that issued the JWT. For DigitalPersona (AD LDS) users, the issuer domain is the DigitalPersona (AD LDS) instance. For DigitalPersona AD users, the issuer domain is the NETBIOS Domain name that the user belong to.  
+
+Below is an example of this claim.  
+
+~~~
+"dom":"Software_Department"  
+~~~
+
+#### "iat" (Issued At) Claim  
+
+The "iat" (issued at) claim identifies the date and time when the JWT was issued. This claim can be used to determine the age of the token. Its value must be a number containing an IntDate value.  
+
+The time is always in UTC Unix time format, an integral value representing the number of seconds elapsed since 00:00 hours, i.e. Jan 1, 1970 UTC.  
+
 Below is an example of this claim.
-"iss":"altus-01.mydomain.com"
-"dom" (Issuer Domain) Claim
-The "dom" (issuer domain) claim identifies the domain that issued the JWT. For DigitalPersona (AD LDS) users, the issuer domain is the DigitalPersona (AD LDS) instance. For DigitalPersona AD users, the issuer domain is the NETBIOS Domain name that the user belong to.
-Below is an example of this claim.
-"dom":"Software_Department"
-"iat" (Issued At) Claim
-The "iat" (issued at) claim identifies the date and time when the JWT was issued. This claim can be used to determine the age of the token. Its value must be a number containing an IntDate value.
-The time is always in UTC Unix time format, an integral value representing the number of seconds elapsed since 00:00 hours, i.e. Jan 1, 1970 UTC.
-Below is an example of this claim.
+
+~~~
 "iat”:1300819380
-"exp" (Expiration Time) Claim
-The exp (expiration time) claim identifies the expiration time on or after which the JWT must not be accepted for processing. The processing of the exp claim requires that the current date/time MUST be before the expiration date/time listed in the exp claim. Implementers may provide for some small leeway, usually no more than a few minutes, to account for clock skew. Its value must be a number containing a IntDate value. Use of this claim is optional.
-The time is always in UTC Unix time format - it is generally implemented as an integral value representing the number of seconds elapsed since 00:00 hours, Jan 1, 1970 UTC.
-Below is example of this claim:
+~~~
+
+#### "exp" (Expiration Time) Claim  
+
+The exp (expiration time) claim identifies the expiration time on or after which the JWT must not be accepted for processing. Use of this claim is optional.
+
+The processing of the exp claim requires that the current date/time MUST be before the expiration date/time listed in the exp claim.  
+
+Implementers may provide for some small leeway, usually no more than a few minutes, to account for clock skew. Its value must be a number containing a IntDate value.
+
+The time is always in UTC Unix time format - it is generally implemented as an integral value representing the number of seconds elapsed since 00:00 hours, Jan 1, 1970 UTC.  
+
+Below is example of this claim:  
+
+~~~
 "exp":1300819380
-sub" (Subject) Claim
-The "sub" (subject) claim identifies the principal that the JWT was issued to. This should be a readable string specifying the identity of the authenticated user; for example, the user’s display name or account name.
-Below is an example of this claim.
+~~~
+
+#### sub" (Subject) Claim  
+
+The "sub" (subject) claim identifies the principal that the JWT was issued to. This should be a readable string specifying the identity of the authenticated user; for example, the user’s display name or account name.  
+
+Below is an example of this claim.  
+
+~~~
 "sub":”Tom Jones”
-"uid" (Subject Unique ID) Claim
-The "uid" (subject UID) claim uniquely identifies the principal (inside a particular DigitalPersona instance) that the JWT is issued to. This is the objectGUID of the user record in the DigitalPersona (AD LDS) database.
+~~~
+
+#### "uid" (Subject Unique ID) Claim  
+
+The "uid" (subject UID) claim uniquely identifies the principal (inside a particular DigitalPersona instance) that the JWT is issued to. This is the objectGUID of the user record in the DigitalPersona (AD LDS) database.  
+
 Below is an example of this claim.
+
+~~~
 "uid":”6E2A0211-59E0-4EFA-89C5-68F75E6CE8B7”
-"crd" (Credentials) Claim
-The "crd" (Credentials) claim must list all the credentials used for the authentication, providing the credential id and the authentication timestamp in the Unix time format.
-Below is an example of this claim.
+~~~
+
+#### "crd" (Credentials) Claim  
+
+The "crd" (Credentials) claim must list all the credentials used for the authentication, providing the credential id and the authentication timestamp in the Unix time format.  
+
+Below is an example of this claim.  
+
+~~~
 "crd":[
 			{“id”:"D1A1F561-E14A-4699-9138-2EB523E132CC",”time”: 1300819380},
 			{“id”:”AC184A13-60AB-40e5-A514-E10F777EC2F9",”time”: 7865233679}
 			]
-The claim above means that two types of credentials were used for authentication at two separate times.
-NOTE: The JWT claim does not include an expiration time, providing the flexibility for the Service Provider to decide to accept this ticket or reject it based on their own logic. It is assumed that the SP clock is in sync with the DigitalPersona Server clock.
-"wan" (Windows Account Name) Claim
-The "wan" (Windows Account Name) claim uniquely identifies the user that the JWT is issued to. This claim is optional and will be issued only for Active Directory users and provides user SAM account name of the user (name format <NETBIOS Domain Name\user account name>. For DigitalPersona users this claim will be omitted.
-Below is an example of this claim:
-"wan":"mydomain\someone"
-"t24" (T24 Name) Claim
-The "t24" (Windows Account Name) claim uniquely identifies the principal to whom JWT is issued inside the T24 database. This claim is optional and will be issued only for T24 users.
-Below is an example of this claim:
+~~~
+
+The claim above means that two types of credentials were used for authentication at two separate times.  
+
+##### NOTE
+
+The JWT claim does not include an expiration time, providing the flexibility for the Service Provider to decide to accept this ticket or reject it based on their own logic. It is assumed that the SP clock is in sync with the DigitalPersona Server clock.  
+
+#### "wan" (Windows Account Name) Claim
+
+The "wan" (Windows Account Name) claim uniquely identifies the user that the JWT is issued to. This claim is optional and will be issued only for Active Directory users, providing the user SAM account name of the user with the format <NETBIOS Domain Name\user account name>. For DigitalPersona Non AD users this claim will be omitted.  
+
+Below is an example of this claim:  
+
+~~~
+"wan":"mydomain\someone"  
+~~~
+
+#### "t24" (T24 Name) Claim  
+
+The "t24" (Windows Account Name) claim uniquely identifies the principal to whom JWT is issued inside the T24 database. This claim is optional and will be issued only for T24 users.  
+
+Below is an example of this claim.  
+
+~~~
 "t24":"someone"
-Example of JWT claims section
-Below is an example of the claims part of a JWT:
+~~~
+
+#### Example of JWT claims section  
+
+Below is an example of the claims part of a JWT.
+
+~~~
 {"jti":"AC184A13-60AB-40e5-A514-E10F777EC2F9",
 "dom":"Software_Department",
-"iss":"altus-01.mycompany.com",
+"iss":"DP-01.mycompany.com",
 "iat":1300819380,
 “exp”:1300819623
-"sub":”Kirill Lozin”,
+"sub":”John Doe”,
 "uid":”6E2A0211-59E0-4EFA-89C5-68F75E6CE8B7”
 "crd":[
 			{"id":"D1A1F561-E14A-4699-9138-2EB523E132CC","time": 1300819380},
 			{"id":"AC184A13-60AB-40e5-A514-E10F777EC2F9","time": 7865233679}
 			]}
-The token above claims user “someone@mycompany.com” was authenticated using password and fingerprint credentials on server “altus-01.mycompany.com”.
-JSON Web Signature (JWS)
-The detailed description for the JWS (JSON Web Signature) is available at: https://tools.ietf.org/html/draft-jones-json-web-signature-04.
-Rules for Creating and Validating a JWS
-To create a JWS, you need to perform the following steps.
-Create the content to be used as the JWS Payload (JWT Claims in our case).
-Base64url encode the bytes of the JWS Payload.  This encoding becomes the Encoded JWS Payload.
-Create a JWS Header containing the desired set of header parameters (JWT Header in our case). Note that white space is explicitly allowed in the representation and no canonicalization is performed before encoding.
-Base64url encode the bytes of the UTF-8 representation of the JWS Header to create the Encoded JWS Header.
-Compute the JWS Signature in the manner defined for the particular algorithm being used. The JWS Signing Input is always the concatenation of the Encoded JWS Header, a period ('.') character, and the Encoded JWS Payload. The "alg" header parameter must be present in the JSON Header, with the algorithm value accurately representing the algorithm used to construct the JWS Signature.
-Base64url encode the representation of the JWS Signature to create the Encoded JWS Signature.
-When validating a JWS, the following steps must be taken.  If any of the listed steps fails, then the signed content must be rejected.
-The Encoded JWS Header must be successfully base64url decoded following the restriction given in this specification that no padding characters have been used.
-The JWS Header must be completely valid JSON syntax conforming to RFC 4627 [RFC4627].
-The JWS Header must be validated to only include parameters and values whose syntax and semantics are both understood and supported.
-The Encoded JWS Payload must be successfully base64url decoded following the restriction given in this specification that no padding characters have been used.
-The Encoded JWS Signature must be successfully base64url decoded following the restriction given in this specification that no padding characters have been used.
-The JWS Signature must be successfully validated against the JWS Header and JWS Payload in the manner defined for the algorithm being used, which must be accurately represented by the value of the "alg" header parameter, which must be present.
-Processing a JWS inevitably requires comparing known strings to values in the header. For example, in checking what the algorithm is, the Unicode string encoding "alg" will be checked against the member names in the JWS Header to see if there is a matching header parameter name. A similar process occurs when determining if the value of the "alg" header parameter represents a supported algorithm.
-Comparisons between JSON strings and other Unicode strings must be performed as specified below.
-Remove any JSON applied escaping to produce an array of Unicode code points.
-Unicode Normalization [USA15] must NOT be applied at any point to either the JSON string or to the string it is to be compared against.
-Comparisons between the two strings must be performed as a Unicode code point to code point equality comparison.
-Creating a JWS with RSA SHA-256
-This section defines the use of the RSASSA-PKCS1-v1_5 signature algorithm as defined in RFC 3447 [RFC3447], Section 8.2 (commonly known as PKCS#1), using SHA-256, SHA-384, or SHA-512 as the hash function.  The RSASSA-PKCS1-v1_5 algorithm is described in FIPS 186-3 [FIPS.186-3], Section 5.5, and the SHA-256, SHA-384, and SHA-512 cryptographic hash functions are defined in FIPS 180-3 [FIPS.180-3].
-The "alg" header parameter values "RS256" are used in the JWS Header to indicate that the Encoded JWS Signature contains a base64url encoded RSA signature using the respective hash function.
-The public keys employed will be distributed using methods that are outside the scope of this document.
+~~~
+
+The token above claims the user John Doe@mycompany.com” was authenticated using their password and fingerprint credentials on the  DigitalPersona server “DP-01.mycompany.com”.
+
+#### JSON Web Signature (JWS)  
+
+The detailed description for the JWS (JSON Web Signature) is available at the following location.
+
+https://tools.ietf.org/html/draft-jones-json-web-signature-04  
+
+#### Rules for Creating and Validating a JWS  
+
+To create a JWS, you need to perform the following steps.  
+
+1. Create the content to be used as the JWS Payload (JWT Claims in our case).  
+2. Base64url encode the bytes of the JWS Payload.  This encoding becomes the Encoded JWS Payload.
+3. Create a JWS Header containing the desired set of header parameters (JWT Header in our case). Note that white space is explicitly allowed in the representation and no canonicalization is performed before encoding.  
+4. Base64url encode the bytes of the UTF-8 representation of the JWS Header to create the Encoded JWS Header.
+5. Compute the JWS Signature in the manner defined for the particular algorithm being used. The JWS Signing Input is always the concatenation of the Encoded JWS Header, a period ('.') character, and the Encoded JWS Payload. The "alg" header parameter must be present in the JSON Header, with the algorithm value accurately representing the algorithm used to construct the JWS Signature.  
+6.Base64url encode the representation of the JWS Signature to create the Encoded JWS Signature.  
+
+When validating a JWS, the following steps must be taken. If any of the listed steps fails, then the signed content must be rejected.  
+
+1. The Encoded JWS Header must be successfully base64url decoded following the restriction given in this specification that no padding characters have been used.  
+2. The JWS Header must be completely valid JSON syntax conforming to RFC 4627 [RFC4627].  
+3. The JWS Header must be validated to only include parameters and values whose syntax and semantics are both understood and supported.  
+4. The Encoded JWS Payload must be successfully base64url decoded following the restriction given in this specification that no padding characters have been used.  
+5. The Encoded JWS Signature must be successfully base64url decoded following the restriction given in this specification that no padding characters have been used.  
+6. The JWS Signature must be successfully validated against the JWS Header and JWS Payload in the manner defined for the algorithm being used, which must be accurately represented by the value of the "alg" header parameter, which must be present.  
+
+Processing a JWS inevitably requires comparing known strings to values in the header. For example, in checking what the algorithm is, the Unicode string encoding "alg" will be checked against the member names in the JWS Header to see if there is a matching header parameter name. A similar process occurs when determining if the value of the "alg" header parameter represents a supported algorithm.  
+
+Comparisons between JSON strings and other Unicode strings must be performed as specified below.  
+
+1. Remove any JSON applied escaping to produce an array of Unicode code points.  
+2. Unicode Normalization [USA15] must NOT be applied at any point to either the JSON string or to the string it is to be compared against.  
+3. Comparisons between the two strings must be performed as a Unicode code point to code point equality comparison.
+
+#### Creating a JWS with RSA SHA-256  
+
+This section defines the use of the RSASSA-PKCS1-v1_5 signature algorithm as defined in RFC 3447 [RFC3447], Section 8.2 (commonly known as PKCS#1), using SHA-256, SHA-384, or SHA-512 as the hash function. The RSASSA-PKCS1-v1_5 algorithm is described in FIPS 186-3 [FIPS.186-3], Section 5.5, and the SHA-256, SHA-384, and SHA-512 cryptographic hash functions are defined in FIPS 180-3 [FIPS.180-3].  
+
+The "alg" header parameter values "RS256" are used in the JWS Header to indicate that the Encoded JWS Signature contains a base64url encoded RSA signature using the respective hash function.  
+
+The public keys employed will be distributed using methods that are outside the scope of this document.  
+
 A 2048-bit or longer key length must be used with this algorithm.
-The RSA SHA-256 signature is generated as follows.
-Generate a digital signature of the UTF-8 representation of the JWS Signing Input using RSASSA-PKCS1-V1_5-SIGN and the SHA-256 hash function with the desired private key.  The output will be a byte array.
-Base64url encode the resulting byte array. The output is the Encoded JWS Signature for that JWS.
-The RSA SHA-256 signature for a JWS is validated as follows.
-Take the Encoded JWS Signature and base64url decode it into a byte array.  If decoding fails, the signed content must be rejected.
-Submit the UTF-8 representation of the JWS Signing Input and the public key corresponding to the private key used by the signer to the RSASSA-PKCS1-V1_5-VERIFY algorithm using SHA-256 as the hash function.
-If the validation fails, the signed content must be rejected.
-JWT Example
+The RSA SHA-256 signature is generated as follows.  
+
+1. Generate a digital signature of the UTF-8 representation of the JWS Signing Input using RSASSA-PKCS1-V1_5-SIGN and the SHA-256 hash function with the desired private key.  The output will be a byte array.  
+2. Base64url encode the resulting byte array. The output is the Encoded JWS Signature for that JWS.  
+
+The RSA SHA-256 signature for a JWS is validated as follows.  
+
+1. Take the Encoded JWS Signature and base64url decode it into a byte array. If decoding fails, the signed content must be rejected.
+2. Submit the UTF-8 representation of the JWS Signing Input and the public key corresponding to the private key used by the signer to the RSASSA-PKCS1-V1_5-VERIFY algorithm using SHA-256 as the hash function.   
+3. If the validation fails, the signed content must be rejected.  
+
+#### JWT Example
+
 The following example JWS Header declares that the data structure is a JSON Web Token (JWT) [JWT] and the JWS Signing Input is signed using the RSA SHA-256 algorithm.  Note that white space is explicitly allowed in JWS Header strings and no canonicalization is performed before encoding.
+
+~~~
 {"typ":"JWT",
 	"alg":" RS256"}
-The following byte array contains the UTF-8 characters for the JWS Header:
+~~~
+
+The following byte array contains the UTF-8 characters for the JWS Header.
+
+~~~
 [123,34,116,121,112,34,58,34,74,87,84,34,44,10,32,34,97,108,103,34,58,34,32,
-82,83,50,53,54,34,125]
-Base64url encoding this UTF-8 representation yields this Encoded JWS Header value.
-eyJ0eXAiOiJKV1QiLAogImFsZyI6IiBSUzI1NiJ9
-The JWS Payload used in this example follows. Note that the payload can be any base64url encoded content, and need not be a base64url encoded JSON object.
+82,83,50,53,54,34,125]  
+~~~
+
+Base64url encoding this UTF-8 representation yields this Encoded JWS Header value.  
+
+~~~
+eyJ0eXAiOiJKV1QiLAogImFsZyI6IiBSUzI1NiJ9  
+~~~
+
+The JWS Payload used in this example follows. Note that the payload can be any base64url encoded content, and need not be a base64url encoded JSON object.  
+
+~~~
 {"jti":"AC184A13-60AB-40e5-A514-E10F777EC2F9",
 "dom":"Software_Department",
-"iss":"altus-01.mycompany.com",
+"iss":"DP-01.mycompany.com",
 "iat":1300819380,
-"sub":”Kirill Lozin”,
+"sub":John Doe”,
 "uid":”6E2A0211-59E0-4EFA-89C5-68F75E6CE8B7”
 "crd":[
 			{"id":"D1A1F561-E14A-4699-9138-2EB523E132CC","time": 1300819380},
 			{"id":"AC184A13-60AB-40e5-A514-E10F777EC2F9","time": 7865233679}
-			]}
-The following byte array contains the UTF-8 characters for the JWS Payload:
-[123,34,106,116,105,34,58,34,123,65,67,49,56,52,65,49,51,45,54,48,65,66,45,52,48,101,53,45,65,53,49,52,45,69,49,48,70,55,55,55,69,67,50,70,57,125,34,44,10,34,105,115,115,34,58,34,97,108,116,117,115,45,48,49,46,100,105,103,105,116,97,108,112,101,114,115,111,110,97,46,99,111,109,34,44,10,34,105,97,116,34,58,49,51,48,48,56,49,57,51,56,48,44,10,34,115,117,98,34,58,123,34,110,97,109,101,34,58,34,107,108,111,122,105,110,64,100,105,103,105,116,97,108,112,101,114,115,111,110,97,46,99,111,109,34,44,34,116,121,112,101,34,58,54,125,44,10,34,99,114,100,34,58,91,10,123,34,105,100,34,58,34,123,68,49,65,49,70,53,54,49,45,69,49,52,65,45,52,54,57,57,45,57,49,51,56,45,50,69,66,53,50,51,69,49,51,50,67,67,125,34,44,34,116,105,109,101,34,58,32,49,51,48,48,56,49,57,51,56,48,125,44,10,123,34,105,100,34,58,34,123,65,67,49,56,52,65,49,51,45,54,48,65,66,45,52,48,101,53,45,65,53,49,52,45,69,49,48,70,55,55,55,69,67,50,70,57,125,34,44,34,116,105,109,101,34,58,32,55,56,54,53,50,51,51,54,55,57,125,10,93,125]
-Base64url encoding the above yields the Encoded JWS Payload value (with line breaks for display purposes only):
-eyJqdGkiOiJ7QUMxODRBMTMtNjBBQi00MGU1LUE1MTQtRTEwRjc3N0VDMkY5fSIsCiJpc3MiOiJh
-bHR1cy0wMS5kaWdpdGFscGVyc29uYS5jb20iLAoiaWF0IjoxMzAwODE5MzgwLAoic3ViIjp7Im5h
-bWUiOiJrbG96aW5AZGlnaXRhbHBlcnNvbmEuY29tIiwidHlwZSI6Nn0sCiJjcmQiOlsKeyJpZCI6
-IntEMUExRjU2MS1FMTRBLTQ2OTktOTEzOC0yRUI1MjNFMTMyQ0N9IiwidGltZSI6IDEzMDA4MTkz
-ODB9LAp7ImlkIjoie0FDMTg0QTEzLTYwQUItNDBlNS1BNTE0LUUxMEY3NzdFQzJGOX0iLCJ0aW1l
-IjogNzg2NTIzMzY3OX0KXX0
-Concatenating the Encoded JWS Header, a period character, and the Encoded JWS Payload yields this JWS Signing Input value (with line breaks for display purposes only):
+			]}  
+~~~
+
+The following byte array contains the UTF-8 characters for the JWS Payload.  
+
+~~~
+[123,34,106,116,105,34,58,34,123,65,67,49,56,52,65,49,51,45,54,48,65,66,45,52,48,101,53,45,65,53,49,52,45,69,49,48,70,55,55,55,69,67,50,70,57,125,34,44,10,34,105,115,115,34,58,34,97,108,116,117,115,45,48,49,46,100,105,103,105,116,97,108,112,101,114,115,111,110,97,46,99,111,109,34,44,10,34,105,97,116,34,58,49,51,48,48,56,49,57,51,56,48,44,10,34,115,117,98,34,58,123,34,110,97,109,101,34,58,34,107,108,111,122,105,110,64,100,105,103,105,116,97,108,112,101,114,115,111,110,97,46,99,111,109,34,44,34,116,121,112,101,34,58,54,125,44,10,34,99,114,100,34,58,91,10,123,34,105,100,34,58,34,123,68,49,65,49,70,53,54,49,45,69,49,52,65,45,52,54,57,57,45,57,49,51,56,45,50,69,66,53,50,51,69,49,51,50,67,67,125,34,44,34,116,105,109,101,34,58,32,49,51,48,48,56,49,57,51,56,48,125,44,10,123,34,105,100,34,58,34,123,65,67,49,56,52,65,49,51,45,54,48,65,66,45,52,48,101,53,45,65,53,49,52,45,69,49,48,70,55,55,55,69,67,50,70,57,125,34,44,34,116,105,109,101,34,58,32,55,56,54,53,50,51,51,54,55,57,125,10,93,125]  
+~~~  
+
+
+Base64url encoding the above yields the Encoded JWS Payload value (with line breaks for display purposes only).  
+~~~
+eyJqdGkiOiJ7QUMxODRBMTMtNjBBQi00MGU1LUE1MTQtRTEwRjc3N0VDMkY5fSIsCiJpc3MiOiJhbHR1cy0wMS5kaWdpdGFscGVyc29uYS5jb20iLAoiaWF0IjoxMzAwODE5MzgwLAoic3ViIjp7Im5hbWUiOiJrbG96aW5AZGlnaXRhbHBlcnNvbmEuY29tIiwidHlwZSI6Nn0sCiJjcmQiOlsKeyJpZCI6IntEMUExRjU2MS1FMTRBLTQ2OTktOTEzOC0yRUI1MjNFMTMyQ0N9IiwidGltZSI6IDEzMDA4MTkzODB9LAp7ImlkIjoie0FDMTg0QTEzLTYwQUItNDBlNS1BNTE0LUUxMEY3NzdFQzJGOX0iLCJ0aW1lIjogNzg2NTIzMzY3OX0KXX0  
+~~~
+
+Concatenating the Encoded JWS Header, a period character, and the Encoded JWS Payload yields this JWS Signing Input value (with line breaks for display purposes only).  
+
+~~~
 eyJ0eXAiOiJKV1QiLAogImFsZyI6IiBSUzI1NiJ9
 .
 eyJqdGkiOiJ7QUMxODRBMTMtNjBBQi00MGU1LUE1MTQtRTEwRjc3N0VDMkY5fSIsCiJpc3MiOiJh
@@ -1003,27 +1246,41 @@ bHR1cy0wMS5kaWdpdGFscGVyc29uYS5jb20iLAoiaWF0IjoxMzAwODE5MzgwLAoic3ViIjp7Im5h
 bWUiOiJrbG96aW5AZGlnaXRhbHBlcnNvbmEuY29tIiwidHlwZSI6Nn0sCiJjcmQiOlsKeyJpZCI6
 IntEMUExRjU2MS1FMTRBLTQ2OTktOTEzOC0yRUI1MjNFMTMyQ0N9IiwidGltZSI6IDEzMDA4MTkz
 ODB9LAp7ImlkIjoie0FDMTg0QTEzLTYwQUItNDBlNS1BNTE0LUUxMEY3NzdFQzJGOX0iLCJ0aW1l
-IjogNzg2NTIzMzY3OX0KXX0
-Running the RSA SHA-256 algorithm on the UTF-8 representation of the JWS Signing Input with this key yields the following byte array.
+IjogNzg2NTIzMzY3OX0KXX0  
+~~~  
+
+Running the RSA SHA-256 algorithm on the UTF-8 representation of the JWS Signing Input with this key yields the following byte array.  
+
+~~~
 [116, 24, 223, 180, 151, 153, 224, 37, 79, 250, 96, 125, 216, 173, 187, 186,
-22, 212, 37, 77, 105, 214, 191, 240, 91, 88, 5, 88, 83, 132, 141, 121]
-Base64url encoding the above output yields the Encoded JWS Signature value:
-dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk
-The following string represents the final JWT.
+22, 212, 37, 77, 105, 214, 191, 240, 91, 88, 5, 88, 83, 132, 141, 121]  
+~~~
+
+Base64url encoding the above output yields the Encoded JWS Signature value.  
+
+~~~
+dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk  
+~~~
+
+The following string represents the final JWT.  
+
+~~~
 eyJ0eXAiOiJKV1QiLAogImFsZyI6IiBSUzI1NiJ9
 .
-eyJqdGkiOiJ7QUMxODRBMTMtNjBBQi00MGU1LUE1MTQtRTEwRjc3N0VDMkY5fSIsCiJpc3MiOiJh
-bHR1cy0wMS5kaWdpdGFscGVyc29uYS5jb20iLAoiaWF0IjoxMzAwODE5MzgwLAoic3ViIjp7Im5h
-bWUiOiJrbG96aW5AZGlnaXRhbHBlcnNvbmEuY29tIiwidHlwZSI6Nn0sCiJjcmQiOlsKeyJpZCI6
-IntEMUExRjU2MS1FMTRBLTQ2OTktOTEzOC0yRUI1MjNFMTMyQ0N9IiwidGltZSI6IDEzMDA4MTkz
-ODB9LAp7ImlkIjoie0FDMTg0QTEzLTYwQUItNDBlNS1BNTE0LUUxMEY3NzdFQzJGOX0iLCJ0aW1l
-IjogNzg2NTIzMzY3OX0KXX0
+eyJqdGkiOiJ7QUMxODRBMTMtNjBBQi00MGU1LUE1MTQtRTEwRjc3N0VDMkY5fSIsCiJpc3MiOiJhbHR1cy0wMS5kaWdpdGFscGVyc29uYS5jb20iLAoiaWF0IjoxMzAwODE5MzgwLAoic3ViIjp7Im5hbWUiOiJrbG96aW5AZGlnaXRhbHBlcnNvbmEuY29tIiwidHlwZSI6Nn0sCiJjcmQiOlsKeyJpZCI6IntEMUExRjU2MS1FMTRBLTQ2OTktOTEzOC0yRUI1MjNFMTMyQ0N9IiwidGltZSI6IDEzMDA4MTkzODB9LAp7ImlkIjoie0FDMTg0QTEzLTYwQUItNDBlNS1BNTE0LUUxMEY3NzdFQzJGOX0iLCJ0aW1lIjogNzg2NTIzMzY3OX0KXX0
 .
-dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk
-Error Handling
-If the DigitalPersona Server failed process authentication request, HTTP status of the request would be set to 404 (Not found) and WebFaultException of the WebFault  class will be fired so the HTTP response will have Json representation of WebFault  class:
-For further details on the WebFaultException, see the following Microsoft article.
-https://msdn.microsoft.com/en-us/library/system.servicemodel.web.webfaultexception(v=vs.110).aspx
+dBjftJeZ4CVPmB92K27uhbUJU1p1r_wW1gFWFOEjXk  
+~~~
+
+### Error Handling  
+
+If the DigitalPersona Server failed process authentication request, HTTP status of the request would be set to 404 (Not found) and WebFaultException of the WebFault class will be fired so the HTTP response will have Json representation of the WebFault class.
+
+For further details on the WebFaultException, see the following Microsoft article.  
+
+https://msdn.microsoft.com/en-us/library/system.servicemodel.web.webfaultexception(v=vs.110).aspx  
+
+~~~
 [DataContract]
 public class WebFault
 	{
@@ -1037,12 +1294,30 @@ public int error_code { get; set; }
 [DataMember]
 public String description { get; set; }
 }
-Value	Description
-error_code 	Error code returned by the DigitalPersona Server, for example -2147024891 (0x80070005) for access denied error.
-description	Detailed description of the error, for example "Access is denied" for access denied error.
+~~~
 
-Below is an example of error returned by WAS:
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Value</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">error_code</td>
+  <td valign="top">Error code returned by the DigitalPersona Server, for example -2147024891 (0x80070005) for an access denied error.</td>
+  </tr>
+  <tr>
+  <td valign="top">description</td>
+  <td valign="top">	Detailed description of the error, for example "Access is denied" for access denied error.
+</td>
+  </tr>
+</table>
+
+
+Below is an example of an error returned by WAS.
+
+~~~  
 {
 	"error_code"=-2147024891,
 	"description"="Access is denied."
 }
+~~~
