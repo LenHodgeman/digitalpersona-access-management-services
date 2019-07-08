@@ -789,7 +789,7 @@ public class Credential
   </tr>
   <tr>
   <td valign="top">data	</td>
-  <td valign="top">Base64url encoded credential data. The format of this data depends on the credential and is explained in <mark style="color:Red;">the chapter “Credentials Data Format” on page 44.<mark></td>
+  <td valign="top">Base64url encoded credential data. The format of this data depends on the credential and is explained in <mark style="color:Red;">the chapter “Credentials Data Format” on page 44.</mark></td>
   </tr>
 </table>
 
