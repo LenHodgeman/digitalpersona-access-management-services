@@ -7,3 +7,5 @@
 #### DigitalPersona Web Application Sample
 #### DigitalPersona OIDC Sample
 #### DigitalPersona Native Application Samples
+#### DigitalPersona C++ Sample Application
+#### DigitalPersona .NET Sample Application
