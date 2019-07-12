@@ -478,16 +478,30 @@ public class OTPEnrollData
 }
 ~~~
 
-Parameter	Description
-otp	 String with OTP verification code. If OTP code cannot be verified, enrollment operation will fail with the following error: "The operation being requested was not performed because the user has not been authenticated.". NOTE: verification can fail only for two reasons:
-The user mistyped the OTP code
-The clocks on the phone and the DigitalPersona Server are not synchronized.
-key	Bease64Url Encoded TOTP key.
-phoneNumber	User's phone number. This parameter is required to support SMS OTP logon option and if SMS OTP support is not required can be omitted or set to "null".
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Parameter</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">otp</td>
+  <td valign="top">	 String with OTP verification code. If OTP code cannot be verified, the enrollment operation will fail with the following error: "The operation being requested was not performed because the user has not been authenticated.". <BR><BR>Note that  verification can fail for one of two reasons. Either the user mistyped the OTP code or the clocks on the phone and the DigitalPersona Server are not synchronized.</td>
+  </tr>
+  <tr>
+  <td valign="top">key</td>
+  <td valign="top">	Bease64Url Encoded TOTP key.
+  </td>
+  </tr>
+  <tr>
+  <td valign="top">phoneNumber</td>
+  <td valign="top">	User's phone number. This parameter is required to support SMS OTP logon option and if SMS OTP support is not required can be omitted or set to "null".</td>
+  </tr>
+</table>
 
-The following steps are needed to create TOTP Enrollment Credential:
-Base64Url encode TOTP Key.  We support TOTP Key of any length but at least 160bit length TOTP Key is suggested for security reason.
-Create JSON representation of OTPEnrollData class where to otp assign OTP verification code typed by user and  key is string created in step #1.
+The following steps are needed to create a  TOTP Enrollment Credential.
+
+1. Base64Url encode the TOTP Key.  We support a TOTP Key of any length, but at least a 160 bit TOTP Key is suggested for security reasons.  
+2. Create a JSON representation of the  OTPEnrollData class where the otp assign OTP verification code typed by user and  key is string created in step #1.
 Base64Url encode string created in step #2.
 Create JSON representation to Credential class setting TOTP Credential ID as id member and string we created in step #3 as data member.
 For example client gets TOTP Key and it could be represented by following byte array:
